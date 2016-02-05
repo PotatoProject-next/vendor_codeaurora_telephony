@@ -106,4 +106,13 @@ oneway interface IQtiImsExtListener {
      * @return void.
      */
     void notifyRefreshViceInfo(in QtiViceInfo viceInfo);
+
+    /**
+     * Notifies client the result of call transfer request
+     *
+     * @param <result> is one of the values QTI_IMS_REQUEST_*, as defined in
+     *        <code>org.codeaurora.ims.qtiims.QtiImsInterfaceUtils.</code>
+     * @return void.
+     */
+    void receiveCallTransferResponse(int result);
 }
