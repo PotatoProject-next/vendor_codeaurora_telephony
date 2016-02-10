@@ -121,4 +121,21 @@ oneway interface IQtiImsExt {
      */
     void sendCallTransferRequest(int phoneId, int type, String number,
             IQtiImsExtListener listener);
+
+    /**
+     * Query Vops information
+     *
+     * @param listener an IQtiImsExtListener instance to indicate the response
+     * @return void
+     */
+    void queryVopsStatus(IQtiImsExtListener listener);
+
+   /**
+     * Query Ssac information
+     *
+     * @param listener an IQtiImsExtListener instance to indicate the response
+     * @return void
+     */
+    void querySsacStatus(IQtiImsExtListener listener);
+
 }

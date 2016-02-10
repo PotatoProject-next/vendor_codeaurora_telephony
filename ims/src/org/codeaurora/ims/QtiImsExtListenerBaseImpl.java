@@ -64,5 +64,14 @@ public class QtiImsExtListenerBaseImpl extends IQtiImsExtListener.Stub {
     @Override
     public void receiveCallTransferResponse(int result) {
     }
+
+    @Override
+    public void notifyVopsStatus(boolean vopsStatus) {
+    }
+
+    @Override
+    public void notifySsacStatus(boolean ssacStatusResponse) {
+    }
+
 }
 
