@@ -30,6 +30,7 @@
 package org.codeaurora.ims.utils;
 
 import android.content.ContentResolver;
+import android.content.Context;
 
 /**
  * This class contains QtiImsExt specific utiltity functions.
@@ -52,6 +53,20 @@ public class QtiImsExtUtils {
 
     /* Call RAT extra key */
     public static final String QTI_IMS_CALL_RAT_EXTRA_KEY = "callRadioTech";
+
+    /**
+     * Definitions for the call transfer type. For easier implementation,
+     * the transfer type is defined as a bit mask value.
+     */
+    //Value representing blind call transfer type
+    public static final int QTI_IMS_BLIND_TRANSFER = 0x01;
+    //Value representing assured call transfer type
+    public static final int QTI_IMS_ASSURED_TRANSFER = 0x02;
+    //Value representing consultative call transfer type
+    public static final int QTI_IMS_CONSULTATIVE_TRANSFER = 0x04;
+
+    /* Call transfer extra key */
+    public static final String QTI_IMS_TRANSFER_EXTRA_KEY = "transferType";
 
     /**
      * Private constructor for QtiImsExtUtils as we don't want to instantiate this class
@@ -85,5 +100,13 @@ public class QtiImsExtUtils {
 
         android.provider.Settings.Global.putString(contentResolver,
                 QTI_IMS_CALL_DEFLECT_NUMBER, deflectNum);
+    }
+
+    /***
+     * Checks if the IMS call transfer property is enabled or not.
+     * Returns true if enabled, or false otherwise.
+     */
+    public static boolean isCallTransferEnabled(Context context) {
+        return false;
     }
 }
