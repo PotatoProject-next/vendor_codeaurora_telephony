@@ -87,6 +87,9 @@ public class QtiImsExtUtils {
     public static final String EXTRA_SSAC = "Ssac";
 
 
+    /* Incoming conference call extra key */
+    public static final String QTI_IMS_INCOMING_CONF_EXTRA_KEY = "incomingConference";
+
     /**
      * Private constructor for QtiImsExtUtils as we don't want to instantiate this class
      */
