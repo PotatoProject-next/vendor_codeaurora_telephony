@@ -174,4 +174,26 @@ oneway interface IQtiImsExtListener {
      * @return void.
      */
     void onVoltePreferenceQueried(int result, int mode);
+
+    /**
+     * Notifies client the value of the set handover config result.
+     *
+     * @param <status> is one of the values QTI_IMS_REQUEST_*, as defined in
+     *        <code>org.codeaurora.ims.utils.QtiImsExtUtils</code>
+     * @return void.
+     */
+    void onSetHandoverConfig(int status);
+
+   /**
+     * Notifies client the value of the get operation result on get handover config item.
+     *
+     * @param <status> is one of the values QTI_IMS_REQUEST_*, as defined in
+     *        <code>org.codeaurora.ims.utils.QtiImsExtUtils</code>
+     * @param hoConfig is valid when status is QTI_IMS_REQUEST_SUCCESS and it can have
+     *        one of the values QTI_IMS_HO_* excluding QTI_IMS_HO_INVALID, as defined in
+     *        <code>org.codeaurora.ims.utils.QtiImsExtUtils</code>
+     * @return void
+     */
+   void onGetHandoverConfig(int status, int hoConfig);
+
 }

@@ -193,4 +193,28 @@ interface IQtiImsExt {
      * @return void
      */
     oneway void queryVoltePreference(int phoneId, IQtiImsExtListener listener);
+
+   /**
+     * getHandoverConfig
+     * Get IMS Handover Enabled status
+     *
+     * @param listener, provided if caller needs to be notified for get result.
+     * @return void
+     *
+     * @throws RemoteException if calling the IMS service results in an error.
+     */
+    oneway void getHandoverConfig(IQtiImsExtListener listener);
+
+   /**
+     * setHandoverConfig
+     * Set IMS Handover Enabled status
+     *
+     * @param hoConfig is one of the values QTI_IMS_HO_*, as defined in
+     *        <code>org.codeaurora.ims.utils.QtiImsExtUtils</code>
+     * @param listener, provided if caller needs to be notified for set result.
+     * @return void
+     *
+     * @throws RemoteException if calling the IMS service results in an error.
+     */
+    oneway void setHandoverConfig(int hoConfig, IQtiImsExtListener listener);
 }
