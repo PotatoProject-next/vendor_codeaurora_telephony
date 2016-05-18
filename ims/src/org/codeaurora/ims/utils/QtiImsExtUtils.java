@@ -31,6 +31,7 @@ package org.codeaurora.ims.utils;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.os.SystemProperties;
 
 /**
  * This class contains QtiImsExt specific utiltity functions.
@@ -125,6 +126,6 @@ public class QtiImsExtUtils {
      * Returns true if enabled, or false otherwise.
      */
     public static boolean isCallTransferEnabled(Context context) {
-        return false;
+        return SystemProperties.getBoolean("persist.radio.ims_call_transfer", false);
     }
 }
