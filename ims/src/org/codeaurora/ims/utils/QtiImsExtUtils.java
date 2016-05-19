@@ -62,9 +62,6 @@ public class QtiImsExtUtils {
     /* Default error value */
     public static final int QTI_IMS_REQUEST_ERROR = 1;
 
-    /* Call RAT extra key */
-    public static final String QTI_IMS_CALL_RAT_EXTRA_KEY = "callRadioTech";
-
     /**
      * Definitions for the call transfer type. For easier implementation,
      * the transfer type is defined as a bit mask value.
