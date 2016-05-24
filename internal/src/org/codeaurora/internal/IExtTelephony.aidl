@@ -118,6 +118,13 @@ interface IExtTelephony {
     int getPhoneIdForECall();
 
     /**
+    * Set Primary card on given slot.
+    * @param - slotId to be set as Primary Card.
+    * @return void
+    */
+    void setPrimaryCardOnSlot(int slotId);
+
+    /**
     * Check is FDN is enabled or not.
     * @param - void
     * @return true or false
