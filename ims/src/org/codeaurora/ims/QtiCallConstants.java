@@ -134,6 +134,10 @@ public class QtiCallConstants {
     /* Orientation mode extra key name */
     public static final String ORIENTATION_MODE_EXTRA_KEY = "OrientationMode";
 
+    /* Video call dataUsage Key that holds the data usage consumed by Video call
+       on LTE/WLAN RATs */
+    public static final String VIDEO_CALL_DATA_USAGE_KEY = "dataUsage";
+
     /* low battery extra key name that contains a boolean value,
        TRUE meaning battery is low else FALSE */
     public static final String LOW_BATTERY_EXTRA_KEY = "LowBattery";
