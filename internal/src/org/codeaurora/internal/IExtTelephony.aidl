@@ -130,4 +130,46 @@ interface IExtTelephony {
     * @return true or false
     */
     boolean isFdnEnabled();
+
+    /**
+    * Get primary stack phone id.
+    * @param - void
+    * @return phone id
+    */
+    int getPrimaryStackPhoneId();
+
+    /**
+    * Check if number is emergency number or not.
+    * @param - number
+    * @return true or false
+    */
+    boolean isEmergencyNumber(String number);
+
+    /**
+    * Check if number is local emergency number or not.
+    * @param - number
+    * @return true or false
+    */
+    boolean isLocalEmergencyNumber(String number);
+
+    /**
+    * Check if number is potential emergency number or not.
+    * @param - number
+    * @return true or false
+    */
+    boolean isPotentialEmergencyNumber(String number);
+
+    /**
+    * Check if number is potential Local emergency number or not.
+    * @param - number
+    * @return true or false
+    */
+    boolean isPotentialLocalEmergencyNumber(String number);
+
+    /**
+    * Check if device in single stanby.
+    * @param - void
+    * @return true or false
+    */
+    boolean isDeviceInSingleStandby();
 }
