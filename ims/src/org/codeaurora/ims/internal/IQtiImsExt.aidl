@@ -34,7 +34,7 @@ import org.codeaurora.ims.internal.IQtiImsExtListener;
  * Interface through which APP and vendor communicates.
  * {@hide}
  */
-oneway interface IQtiImsExt {
+interface IQtiImsExt {
    /**
      * setCallForwardingUncondTimerOptions
      * sets a call forwarding unconditional Timer option.
@@ -56,8 +56,8 @@ oneway interface IQtiImsExt {
      * @param QtiImsExtListener listener to request
      * @return void
      */
-    void setCallForwardUncondTimer(int startHour, int startMinute, int endHour, int endMinute,
-            int action, int reason, int serviceClass, String dialingNumber,
+    oneway void setCallForwardUncondTimer(int startHour, int startMinute, int endHour,
+            int endMinute, int action, int reason, int serviceClass, String dialingNumber,
             IQtiImsExtListener listener);
 
    /**
@@ -73,7 +73,7 @@ oneway interface IQtiImsExt {
      * @param QtiImsExtListener listener to request
      * @return void
      */
-    void getCallForwardUncondTimer(int reason, int serviceClass,
+    oneway void getCallForwardUncondTimer(int reason, int serviceClass,
             IQtiImsExtListener listener);
 
     /**
@@ -84,7 +84,7 @@ oneway interface IQtiImsExt {
       *
       * @throws RemoteException if calling the IMS service results in an error.
       */
-    void getPacketCount(IQtiImsExtListener listener);
+    oneway void getPacketCount(IQtiImsExtListener listener);
 
    /**
      * Total number of packet errors encountered
@@ -94,7 +94,7 @@ oneway interface IQtiImsExt {
      *
      * @throws RemoteException if calling the IMS service results in an error.
      */
-    void getPacketErrorCount(IQtiImsExtListener listener);
+    oneway void getPacketErrorCount(IQtiImsExtListener listener);
 
    /**
      * sendCallDeflectRequest
@@ -105,7 +105,7 @@ oneway interface IQtiImsExt {
      * @param listener an IQtiImsExtListener instance to indicate the response
      * @return void
      */
-    void sendCallDeflectRequest(int phoneId, String deflectNumber,
+    oneway void sendCallDeflectRequest(int phoneId, String deflectNumber,
             IQtiImsExtListener listener);
 
    /**
@@ -119,7 +119,7 @@ oneway interface IQtiImsExt {
      * @param listener an IQtiImsInterfaceListener instance to indicate the response
      * @return void
      */
-    void sendCallTransferRequest(int phoneId, int type, String number,
+    oneway void sendCallTransferRequest(int phoneId, int type, String number,
             IQtiImsExtListener listener);
 
     /**
@@ -128,7 +128,7 @@ oneway interface IQtiImsExt {
      * @param listener an IQtiImsExtListener instance to indicate the response
      * @return void
      */
-    void queryVopsStatus(IQtiImsExtListener listener);
+    oneway void queryVopsStatus(IQtiImsExtListener listener);
 
    /**
      * Query Ssac information
@@ -136,7 +136,13 @@ oneway interface IQtiImsExt {
      * @param listener an IQtiImsExtListener instance to indicate the response
      * @return void
      */
-    void querySsacStatus(IQtiImsExtListener listener);
+    oneway void querySsacStatus(IQtiImsExtListener listener);
+
+   /**
+     * Gets the phoneId on which ImsService is up and running
+     * @return value in integer format
+     */
+    int getImsPhoneId();
 
    /**
      * Register for VICE dialog
@@ -145,6 +151,6 @@ oneway interface IQtiImsExt {
      * @return void
      *
      */
-    void registerForViceRefreshInfo(IQtiImsExtListener listener);
+    oneway void registerForViceRefreshInfo(IQtiImsExtListener listener);
 
 }

@@ -190,5 +190,8 @@ public class QtiCallConstants {
      * Add participant in an active or conference call option
      */
     public static final int CAPABILITY_ADD_PARTICIPANT = 0x02000000;
+
+    /* Invalid phone Id */
+    public static final int INVALID_PHONE_ID = -1;
 }
 

@@ -33,6 +33,7 @@ import android.os.ServiceManager;
 
 import org.codeaurora.ims.internal.IQtiImsExt;
 import org.codeaurora.ims.internal.IQtiImsExtListener;
+import org.codeaurora.ims.QtiCallConstants;
 
 /**
  * Provides API's for IQtiImsExt Binder such as sending call deflect, call transfer etc
@@ -148,6 +149,17 @@ public class QtiImsExtManager {
         } catch(RemoteException e) {
             throw new QtiImsException("Remote ImsService querySsacStatus : " + e);
         }
+    }
+
+    public int getImsPhoneId() throws QtiImsException {
+        obtainBinder();
+        int imsPhoneId = QtiCallConstants.INVALID_PHONE_ID;
+        try {
+            imsPhoneId = mQtiImsExt.getImsPhoneId();
+        } catch(RemoteException e) {
+            throw new QtiImsException("Remote ImsService getImsPhoneId : " + e);
+        }
+        return imsPhoneId;
     }
 
     public void registerForViceRefreshInfo(IQtiImsExtListener listener) throws QtiImsException {

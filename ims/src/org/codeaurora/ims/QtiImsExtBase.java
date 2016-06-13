@@ -29,6 +29,7 @@ package org.codeaurora.ims;
 
 import org.codeaurora.ims.internal.IQtiImsExt;
 import org.codeaurora.ims.internal.IQtiImsExtListener;
+import org.codeaurora.ims.QtiCallConstants;
 
 /**
  * Base implementation for IQtiImsExt.
@@ -87,6 +88,11 @@ public abstract class QtiImsExtBase {
         }
 
         @Override
+        public int getImsPhoneId() {
+            return onGetImsPhoneId();
+        }
+
+        @Override
         public void registerForViceRefreshInfo(IQtiImsExtListener listener) {
             onRegisterForViceRefreshInfo(listener);
         }
@@ -129,6 +135,9 @@ public abstract class QtiImsExtBase {
     }
     protected void onQuerySsacStatus(IQtiImsExtListener listener) {
         // no-op
+    }
+    protected int onGetImsPhoneId() {
+        return QtiCallConstants.INVALID_PHONE_ID;
     }
     protected void onRegisterForViceRefreshInfo(IQtiImsExtListener listener) {
         // no-op
