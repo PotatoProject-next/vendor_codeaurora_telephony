@@ -30,6 +30,7 @@
 
 package org.codeaurora.internal;
 
+import org.codeaurora.internal.IDsda;
 
 /**
  * Interface used to interact with the telephony framework for
@@ -172,4 +173,41 @@ interface IExtTelephony {
     * @return true or false
     */
     boolean isDeviceInSingleStandby();
+
+    /* Send local call hold request to RIL.
+    * @param subId, send request on this subscription
+    * @param enable
+    *        true - to enable local call hold
+    *        false - to disable local call hold
+    * @return true or false
+    */
+    boolean setLocalCallHold(int subId, boolean enable);
+
+    /**
+    * Send switch to other subscription.
+    * @param subId, send request on this subscription
+    * @return void
+    */
+    void switchToActiveSub(int subId);
+
+    /**
+    * set adapter, so that IExtTelephony would have interface to send requests to service/telecom
+    * @param dsdaAdapter, this adapter used by IExtTelephony as interface for requests in IDsda.
+    * @return void
+    */
+    void setDsdaAdapter(in IDsda dsdaAdapter);
+
+    /**
+    * get active subscription.
+    * @param void
+    * @return subId of active subscription.
+    */
+    int getActiveSubscription();
+
+    /**
+    * returns device is in DSDA configuration or not.
+    * @param void
+    * @return true or false
+    */
+    boolean isDsdaEnabled();
 }
