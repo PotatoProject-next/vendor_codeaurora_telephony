@@ -190,6 +190,26 @@ public class QtiImsExtManager {
         }
     }
 
+    public void updateVoltePreference(int phoneId, int preference,
+            IQtiImsExtListener listener) throws QtiImsException {
+        obtainBinder();
+        try {
+            mQtiImsExt.updateVoltePreference(phoneId, preference, listener);
+        } catch(RemoteException e) {
+            throw new QtiImsException("Remote ImsService updateVoltePreference : " + e);
+        }
+    }
+
+    public void queryVoltePreference(int phoneId,
+            IQtiImsExtListener listener) throws QtiImsException {
+        obtainBinder();
+        try {
+            mQtiImsExt.queryVoltePreference(phoneId, listener);
+        } catch(RemoteException e) {
+            throw new QtiImsException("Remote ImsService queryVoltePreference : " + e);
+        }
+    }
+
     /**
      * Check if binder is available, else try to retrieve it from ServiceManager
      * if binder still doesn't exists throw {@link QtiImsException}

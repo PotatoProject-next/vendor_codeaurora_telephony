@@ -93,6 +93,16 @@ public class QtiImsExtUtils {
      */
     public static final String EXTRA_SSAC = "Ssac";
 
+    /**
+     * Definitions for the volte preference values.
+     */
+    //Value representing volte preference is OFF
+    public static final int QTI_IMS_VOLTE_PREF_OFF = 0;
+    //Value representing volte preference is ON
+    public static final int QTI_IMS_VOLTE_PREF_ON = 1;
+    //Value representing volte preference is NOT known
+    public static final int QTI_IMS_VOLTE_PREF_UNKNOWN = 2;
+
 
     /* Incoming conference call extra key */
     public static final String QTI_IMS_INCOMING_CONF_EXTRA_KEY = "incomingConference";
