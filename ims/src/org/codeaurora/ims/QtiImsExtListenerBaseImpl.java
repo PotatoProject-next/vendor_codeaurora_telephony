@@ -73,5 +73,8 @@ public class QtiImsExtListenerBaseImpl extends IQtiImsExtListener.Stub {
     public void notifySsacStatus(boolean ssacStatusResponse) {
     }
 
+    @Override
+    public void notifyRefreshViceInfo(QtiViceInfo viceInfo) {
+    }
 }
 

@@ -85,6 +85,11 @@ public abstract class QtiImsExtBase {
         public void querySsacStatus(IQtiImsExtListener listener) {
             onQuerySsacStatus(listener);
         }
+
+        @Override
+        public void registerForViceRefreshInfo(IQtiImsExtListener listener) {
+            onRegisterForViceRefreshInfo(listener);
+        }
     };
 
     private QtiImsExtBinder mQtiImsExtBinder;
@@ -123,6 +128,9 @@ public abstract class QtiImsExtBase {
         // no-op
     }
     protected void onQuerySsacStatus(IQtiImsExtListener listener) {
+        // no-op
+    }
+    protected void onRegisterForViceRefreshInfo(IQtiImsExtListener listener) {
         // no-op
     }
 }
