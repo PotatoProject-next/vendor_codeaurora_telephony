@@ -30,6 +30,7 @@
 
 package org.codeaurora.internal;
 
+import org.codeaurora.internal.IDepersoResCallback;
 import org.codeaurora.internal.IDsda;
 
 /**
@@ -210,4 +211,15 @@ interface IExtTelephony {
     * @return true or false
     */
     boolean isDsdaEnabled();
+
+    /**
+    * supply pin to unlock sim locked on network.
+    * @param - netpin - network pin to unlock the sim.
+    * @param - type - PersoSubState for which the sim is locked onto.
+    * @param - callback - callback to notify UI, whether the request was success or failure.
+    * @param - phoneId - slot id on which the pin request is sent.
+    * @return void
+    */
+    void supplyIccDepersonalization(String netpin, String type, in IDepersoResCallback callback,
+            int phoneId);
 }
