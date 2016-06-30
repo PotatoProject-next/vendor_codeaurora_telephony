@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2015,2016 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -31,7 +31,17 @@ package org.codeaurora.ims.utils;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.os.PersistableBundle;
 import android.os.SystemProperties;
+import android.telephony.CarrierConfigManager;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
+import android.util.Log;
+
+import org.codeaurora.ims.QtiCallConstants;
+import org.codeaurora.ims.QtiCarrierConfigs;
+import org.codeaurora.ims.QtiImsException;
+import org.codeaurora.ims.QtiImsExtManager;
 
 /**
  * This class contains QtiImsExt specific utiltity functions.
@@ -130,5 +140,80 @@ public class QtiImsExtUtils {
      */
     public static boolean isCallTransferEnabled(Context context) {
         return SystemProperties.getBoolean("persist.radio.ims_call_transfer", false);
+    }
+
+    /**
+     * Returns true if config flag is enabled.
+     */
+    public static boolean isCarrierConfigEnabled(Context context, String carrierConfig) {
+
+        PersistableBundle b = getConfigForDefaultImsPhoneId(context);
+
+        if (b == null) {
+            Log.e(LOG_TAG, "isCarrierConfigEnabled bundle is null");
+            return false;
+        }
+
+        return b.getBoolean(carrierConfig, false);
+    }
+
+    public static boolean allowVideoCallsInLowBattery(Context context) {
+        return isCarrierConfigEnabled(context, QtiCarrierConfigs.ALLOW_VIDEO_CALL_IN_LOW_BATTERY);
+    }
+
+    private static PersistableBundle getConfigForDefaultImsPhoneId(Context context) {
+        return getConfigForPhoneId(context, getImsPhoneId());
+    }
+
+    private static PersistableBundle getConfigForPhoneId(Context context, int phoneId) {
+        CarrierConfigManager configManager = (CarrierConfigManager) context.getSystemService(
+                Context.CARRIER_CONFIG_SERVICE);
+        if (configManager == null) {
+            Log.e(LOG_TAG, "getConfigForPhoneId configManager is null");
+            return null;
+        }
+
+        if (phoneId == QtiCallConstants.INVALID_PHONE_ID) {
+            Log.e(LOG_TAG, "getConfigForPhoneId phoneId is invalid");
+            return null;
+        }
+
+        int subId = getSubscriptionIdFromPhoneId(context, phoneId);
+        if (!SubscriptionManager.isValidSubscriptionId(subId)) {
+            Log.e(LOG_TAG, "getConfigForPhoneId subId is invalid");
+            return null;
+        }
+
+        return configManager.getConfigForSubId(subId);
+    }
+
+    /**
+     * Returns IMS phone id.
+     */
+    private static int getImsPhoneId() {
+        int phoneId = QtiCallConstants.INVALID_PHONE_ID;
+        try {
+            phoneId = QtiImsExtManager.getInstance().getImsPhoneId();
+        } catch (QtiImsException e) {
+            Log.e(LOG_TAG, "getImsPhoneId failed. Exception = " + e);
+        }
+        return phoneId;
+    }
+
+    /**
+     * Returns subscription id for given phone id.
+     */
+    private static int getSubscriptionIdFromPhoneId(Context context, int phoneId) {
+        SubscriptionManager subscriptionManager = SubscriptionManager.from(context);
+        if (subscriptionManager == null) {
+            return subscriptionManager.INVALID_SUBSCRIPTION_ID;
+        }
+
+        SubscriptionInfo subInfo = subscriptionManager.
+                getActiveSubscriptionInfoForSimSlotIndex(phoneId);
+        if (subInfo == null) {
+            return subscriptionManager.INVALID_SUBSCRIPTION_ID;
+        }
+        return subInfo.getSubscriptionId();
     }
 }

@@ -79,6 +79,10 @@ public class QtiCallConstants {
     public static final int CALL_FAIL_EXTRA_CODE_CALL_CS_RETRY_REQUIRED =
             ImsReasonInfo.CODE_LOCAL_CALL_CS_RETRY_REQUIRED;
 
+    /* Calls are rejected due to low battery */
+    public static final int CALL_FAIL_EXTRA_CODE_LOCAL_LOW_BATTERY =
+            ImsReasonInfo.CODE_LOCAL_LOW_BATTERY;
+
     /* Unknown disconnect cause */
     public static final int DISCONNECT_CAUSE_UNSPECIFIED = -1;
 
@@ -170,11 +174,14 @@ public class QtiCallConstants {
     /* Downgrade of a vt call due to generic error */
     public static final int CAUSE_CODE_SESSION_MODIFY_DOWNGRADE_GENERIC_ERROR = 11;
 
-    /* Upgrade/downgrade of a volte/vt call is rejected due to low battery */
-    public static final int CAUSE_CODE_SESSION_MODIFY_REQUEST_LOW_BATTERY = 12;
-
     /* Session modification cause extra key name */
     public static final String SESSION_MODIFICATION_CAUSE_EXTRA_KEY = "SessionModificationCause";
+
+    /** Modify call error due to low battery
+     *  Value should not conflict with videoProvider.
+     *      {@link VideoProvider#SESSION_MODIFY_REQUEST_REJECTED*}
+     */
+    public static final int SESSION_MODIFY_REQUEST_FAILED_LOW_BATTERY = 50;
 
     /**
      * Local device supports downgrade to voice
