@@ -150,6 +150,15 @@ public class QtiImsExtManager {
         }
     }
 
+    public void registerForViceRefreshInfo(IQtiImsExtListener listener) throws QtiImsException {
+        obtainBinder();
+        try {
+            mQtiImsExt.registerForViceRefreshInfo(listener);
+        } catch(RemoteException e) {
+            throw new QtiImsException("Remote ImsService registerForViceRefreshInfo : " + e);
+        }
+    }
+
     /**
      * Check if binder is available, else try to retrieve it from ServiceManager
      * if binder still doesn't exists throw {@link QtiImsException}
