@@ -72,6 +72,11 @@ public abstract class QtiImsExtBase {
         }
 
         @Override
+        public void resumePendingCall(int videoState) {
+            onResumePendingCall(videoState);
+        }
+
+        @Override
         public void sendCallTransferRequest(int phoneId, int type, String number,
                 IQtiImsExtListener listener) {
             onSendCallTransferRequest(phoneId, type, number, listener);
@@ -130,6 +135,9 @@ public abstract class QtiImsExtBase {
     }
     protected void onSendCallDeflectRequest(int phoneId, String deflectNumber,
             IQtiImsExtListener listener) {
+        // no-op
+    }
+    protected void onResumePendingCall(int videoState) {
         // no-op
     }
     protected void onSendCallTransferRequest(int phoneId, int type, String number,

@@ -145,6 +145,16 @@ interface IQtiImsExt {
     int getImsPhoneId();
 
    /**
+     * resumePendingCall
+     * This API shall continue to place DIAL request with videoState as either
+     * Video or Voice based on user confirmation on low battery MO Video call
+     *
+     * @param videoState indicates either Video or Voice type
+     * @return void
+     */
+    oneway void resumePendingCall(int videoState);
+
+   /**
      * Register for VICE dialog
      *
      * @param listener, to get notified for VICE refresh information.
