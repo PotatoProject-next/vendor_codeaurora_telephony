@@ -96,6 +96,12 @@ public abstract class QtiImsExtBase {
         public void registerForViceRefreshInfo(IQtiImsExtListener listener) {
             onRegisterForViceRefreshInfo(listener);
         }
+
+        @Override
+        public void registerForParticipantStatusInfo(IQtiImsExtListener listener) {
+            onRegisterForParticipantStatusInfo(listener);
+        }
+
     };
 
     private QtiImsExtBinder mQtiImsExtBinder;
@@ -140,6 +146,9 @@ public abstract class QtiImsExtBase {
         return QtiCallConstants.INVALID_PHONE_ID;
     }
     protected void onRegisterForViceRefreshInfo(IQtiImsExtListener listener) {
+        // no-op
+    }
+    protected void onRegisterForParticipantStatusInfo(IQtiImsExtListener listener) {
         // no-op
     }
 }

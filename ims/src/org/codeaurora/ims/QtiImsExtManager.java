@@ -171,6 +171,16 @@ public class QtiImsExtManager {
         }
     }
 
+    public void registerForParticipantStatusInfo(IQtiImsExtListener listener)
+            throws QtiImsException {
+        obtainBinder();
+        try {
+            mQtiImsExt.registerForParticipantStatusInfo(listener);
+        } catch(RemoteException e) {
+            throw new QtiImsException("Remote ImsService registerForParticipantStatusInfo : " + e);
+        }
+    }
+
     /**
      * Check if binder is available, else try to retrieve it from ServiceManager
      * if binder still doesn't exists throw {@link QtiImsException}
