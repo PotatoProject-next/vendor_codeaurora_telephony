@@ -158,6 +158,11 @@ public class QtiImsExtUtils {
         return isCarrierConfigEnabled(context, QtiCarrierConfigs.ALLOW_VIDEO_CALL_IN_LOW_BATTERY);
     }
 
+    public static boolean shallHidePreviewInVtConference(Context context) {
+        return isCarrierConfigEnabled(context,
+                QtiCarrierConfigs.HIDE_PREVIEW_IN_VT_CONFERENCE);
+    }
+
     private static PersistableBundle getConfigForDefaultImsPhoneId(Context context) {
         return getConfigForPhoneId(context, getImsPhoneId());
     }
