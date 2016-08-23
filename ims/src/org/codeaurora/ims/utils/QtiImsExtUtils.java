@@ -62,6 +62,12 @@ public class QtiImsExtUtils {
     /* Default error value */
     public static final int QTI_IMS_REQUEST_ERROR = 1;
 
+    /* name for carrier property */
+    public static final String PROPERTY_RADIO_ATEL_CARRIER = "persist.radio.atel.carrier";
+
+    /* Carrier one default mcc mnc */
+    public static final String CARRIER_ONE_DEFAULT_MCC_MNC = "405854";
+
     /**
      * Definitions for the call transfer type. For easier implementation,
      * the transfer type is defined as a bit mask value.
@@ -156,6 +162,14 @@ public class QtiImsExtUtils {
      */
     public static boolean isCsRetryConfigEnabled(Context context) {
         return isCarrierConfigEnabled(context, QtiCarrierConfigs.CONFIG_CS_RETRY);
+    }
+
+    /**
+     * Check is carrier one supported or not
+     */
+    public static boolean isCarrierOneSupported() {
+        return CARRIER_ONE_DEFAULT_MCC_MNC.equals(SystemProperties.get(
+                PROPERTY_RADIO_ATEL_CARRIER));
     }
 
     /**
