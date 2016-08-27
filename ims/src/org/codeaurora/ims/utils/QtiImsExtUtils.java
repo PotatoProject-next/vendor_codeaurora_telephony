@@ -140,6 +140,15 @@ public class QtiImsExtUtils {
     }
 
     /**
+     * This API checks to see whether IMS to CS retry is enabled or not.
+     * @param context context for getting the CS retry configuration value
+     * Returns true if enabled, or false otherwise.
+     */
+    public static boolean isCsRetryConfigEnabled(Context context) {
+        return isCarrierConfigEnabled(context, QtiCarrierConfigs.CONFIG_CS_RETRY);
+    }
+
+    /**
      * Returns true if config flag is enabled.
      */
     public static boolean isCarrierConfigEnabled(Context context, String carrierConfig) {
