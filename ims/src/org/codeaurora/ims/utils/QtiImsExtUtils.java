@@ -182,6 +182,10 @@ public class QtiImsExtUtils {
                 QtiCarrierConfigs.HIDE_PREVIEW_IN_VT_CONFERENCE);
     }
 
+    public static boolean shallRemoveModifyCallCapability(Context context) {
+        return isCarrierConfigEnabled(context, QtiCarrierConfigs.REMOVE_MODIFY_CALL_CAPABILITY);
+    }
+
     private static PersistableBundle getConfigForDefaultImsPhoneId(Context context) {
         return getConfigForPhoneId(context, getImsPhoneId());
     }
