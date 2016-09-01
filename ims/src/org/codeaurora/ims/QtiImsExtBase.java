@@ -107,6 +107,16 @@ public abstract class QtiImsExtBase {
             onRegisterForParticipantStatusInfo(listener);
         }
 
+        @Override
+        public void updateVoltePreference(int phoneId, int preference,
+                IQtiImsExtListener listener) {
+            onUpdateVoltePreference(phoneId, preference, listener);
+        }
+
+        @Override
+        public void queryVoltePreference(int phoneId, IQtiImsExtListener listener) {
+            onQueryVoltePreference(phoneId, listener);
+        }
     };
 
     private QtiImsExtBinder mQtiImsExtBinder;
@@ -157,6 +167,13 @@ public abstract class QtiImsExtBase {
         // no-op
     }
     protected void onRegisterForParticipantStatusInfo(IQtiImsExtListener listener) {
+        // no-op
+    }
+    protected void onUpdateVoltePreference(int phoneId, int preference,
+            IQtiImsExtListener listener) {
+        // no-op
+    }
+    protected void onQueryVoltePreference(int phoneId, IQtiImsExtListener listener) {
         // no-op
     }
 }

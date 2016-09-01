@@ -81,5 +81,13 @@ public class QtiImsExtListenerBaseImpl extends IQtiImsExtListener.Stub {
     public void notifyParticipantStatusInfo(int operation, int sipStatus,
             String participantUri, boolean isEct) {
     }
+
+    @Override
+    public void onVoltePreferenceUpdated(int result) {
+    }
+
+    @Override
+    public void onVoltePreferenceQueried(int result, int mode) {
+    }
 }
 
