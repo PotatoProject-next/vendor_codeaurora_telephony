@@ -89,5 +89,13 @@ public class QtiImsExtListenerBaseImpl extends IQtiImsExtListener.Stub {
     @Override
     public void onVoltePreferenceQueried(int result, int mode) {
     }
+
+    @Override
+    public void onSetHandoverConfig(int result) {
+    }
+
+    @Override
+    public void onGetHandoverConfig(int result, int hoConfig) {
+    }
 }
 
