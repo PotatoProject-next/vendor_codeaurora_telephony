@@ -333,6 +333,15 @@ public class QtiImsExtUtils {
     }
 
     /***
+     * Determines if feature for checking high VT quality option support is enabled or not.
+     * Returns true if enabled, or false otherwise.
+     */
+    public static boolean shallCheckSupportForHighVideoQuality(Context context) {
+        return isCarrierConfigEnabled(context,
+                QtiCarrierConfigs.CHECK_SUPPORT_FOR_HIGH_VIDEO_QUALITY);
+    }
+
+    /***
      * Checks if the IMS call transfer property is enabled or not.
      * Returns true if enabled, or false otherwise.
      */
