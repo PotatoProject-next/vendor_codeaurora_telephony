@@ -70,12 +70,24 @@ public class QtiCarrierConfigs {
 
     /* Config to show/hide Video quality toast */
     public static final String SHOW_VIDEO_QUALITY_TOAST = "show_video_quality_toast";
+
+    /* Config to determine whether to check for support of high option in video quality
+       FALSE - High option will be shown by default
+       TRUE - High option will be shown only if camera is capable enough*/
+    public static final String CHECK_SUPPORT_FOR_HIGH_VIDEO_QUALITY =
+            "check_support_for_high_video_quality";
+
     /* Config to show/hide call session event toast like player start/stop */
     public static final String SHOW_CALL_SESSION_EVENT_TOAST = "show_call_session_event_toast";
     /* Config to show/hide data usage toast */
     public static final String SHOW_DATA_USAGE_TOAST = "show_data_usage_toast";
-    /* Config that controls whether to stop video preview video and show static image
-       in video preview or not
+    /* Config that controls whether to transmit static image instead of
+       preview video stream
        true - enabled, false - disabled */
     public static final String TRANSMIT_STATIC_IMAGE = "transmit_static_image";
+    /* Config that controls whether to show static image related UI elements or not
+       eg. static image option under IMS Settings, static image in preview window,
+       hide me button in active call screen etc.
+       true - enabled, false - disabled */
+    public static final String SHOW_STATIC_IMAGE_UI = "show_static_image_ui";
 }

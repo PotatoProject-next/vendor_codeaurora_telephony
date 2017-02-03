@@ -329,7 +329,23 @@ public class QtiImsExtUtils {
      */
     public static boolean shallTransmitStaticImage(Context context) {
         return isCarrierConfigEnabled(context, QtiCarrierConfigs.TRANSMIT_STATIC_IMAGE);
+    }
 
+    /***
+     * Checks whether static image related UI elements are to be shown or not.
+     * Returns true if the UI elements are to be shown, or false otherwise.
+     */
+    public static boolean shallShowStaticImageUi(Context context) {
+        return isCarrierConfigEnabled(context, QtiCarrierConfigs.SHOW_STATIC_IMAGE_UI);
+    }
+
+    /***
+     * Determines if feature for checking high VT quality option support is enabled or not.
+     * Returns true if enabled, or false otherwise.
+     */
+    public static boolean shallCheckSupportForHighVideoQuality(Context context) {
+        return isCarrierConfigEnabled(context,
+                QtiCarrierConfigs.CHECK_SUPPORT_FOR_HIGH_VIDEO_QUALITY);
     }
 
     /***
