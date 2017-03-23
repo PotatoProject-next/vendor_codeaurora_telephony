@@ -171,15 +171,6 @@ public class QtiImsExtManager {
         return imsPhoneId;
     }
 
-    public void registerForViceRefreshInfo(IQtiImsExtListener listener) throws QtiImsException {
-        obtainBinder();
-        try {
-            mQtiImsExt.registerForViceRefreshInfo(listener);
-        } catch(RemoteException e) {
-            throw new QtiImsException("Remote ImsService registerForViceRefreshInfo : " + e);
-        }
-    }
-
     public void registerForParticipantStatusInfo(IQtiImsExtListener listener)
             throws QtiImsException {
         obtainBinder();

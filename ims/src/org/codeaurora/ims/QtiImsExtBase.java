@@ -98,11 +98,6 @@ public abstract class QtiImsExtBase {
         }
 
         @Override
-        public void registerForViceRefreshInfo(IQtiImsExtListener listener) {
-            onRegisterForViceRefreshInfo(listener);
-        }
-
-        @Override
         public void registerForParticipantStatusInfo(IQtiImsExtListener listener) {
             onRegisterForParticipantStatusInfo(listener);
         }

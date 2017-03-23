@@ -155,15 +155,6 @@ interface IQtiImsExt {
     oneway void resumePendingCall(int videoState);
 
    /**
-     * Register for VICE dialog
-     *
-     * @param listener, to get notified for VICE refresh information.
-     * @return void
-     *
-     */
-    oneway void registerForViceRefreshInfo(IQtiImsExtListener listener);
-
-   /**
      * Register for Pariticipant status information
      *
      * @param listener, to get notified for participant status information.

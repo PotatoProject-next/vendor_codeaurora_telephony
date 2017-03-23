@@ -74,10 +74,6 @@ public class QtiImsExtListenerBaseImpl extends IQtiImsExtListener.Stub {
     }
 
     @Override
-    public void notifyRefreshViceInfo(QtiViceInfo viceInfo) {
-    }
-
-    @Override
     public void notifyParticipantStatusInfo(int operation, int sipStatus,
             String participantUri, boolean isEct) {
     }
