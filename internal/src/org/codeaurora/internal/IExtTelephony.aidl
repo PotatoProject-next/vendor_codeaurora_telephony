@@ -237,4 +237,20 @@ interface IExtTelephony {
     */
     boolean isPrimaryCarrierSlotId(int slotId);
 
+    /**
+    * Change SMSC address based on slotId.
+    * @param - slotId
+    * @param - SMSC address
+    * @return true or false
+    */
+    boolean setSmscAddress(int slotId, String smsc);
+
+    /**
+    * Get SMSC address based on slotId.
+    * @param - slotId
+    * @param - SMSC address
+    * @return SMSC address or null
+    */
+    String getSmscAddress(int slotId);
+
 }
