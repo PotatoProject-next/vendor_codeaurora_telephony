@@ -1,4 +1,4 @@
-/* Copyright (c) 2016, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2016,2017 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -42,27 +42,27 @@ public abstract class QtiImsExtBase {
     public final class QtiImsExtBinder extends IQtiImsExt.Stub {
 
         @Override
-        public void setCallForwardUncondTimer(int startHour, int startMinute, int endHour,
-                int endMinute, int action, int condition, int serviceClass, String number,
-                IQtiImsExtListener listener) {
-            onSetCallForwardUncondTimer(startHour, startMinute, endHour, endMinute, action,
+        public void setCallForwardUncondTimer(int phoneId, int startHour, int startMinute,
+                int endHour, int endMinute, int action, int condition, int serviceClass,
+                String number, IQtiImsExtListener listener) {
+            onSetCallForwardUncondTimer(phoneId, startHour, startMinute, endHour, endMinute, action,
                 condition, serviceClass, number, listener);
         }
 
         @Override
-        public void getCallForwardUncondTimer(int reason, int serviceClass,
+        public void getCallForwardUncondTimer(int phoneId, int reason, int serviceClass,
                 IQtiImsExtListener listener) {
-            onGetCallForwardUncondTimer(reason, serviceClass, listener);
+            onGetCallForwardUncondTimer(phoneId, reason, serviceClass, listener);
         }
 
         @Override
-        public void getPacketCount(IQtiImsExtListener listener) {
-            onGetPacketCount(listener);
+        public void getPacketCount(int phoneId, IQtiImsExtListener listener) {
+            onGetPacketCount(phoneId, listener);
         }
 
         @Override
-        public void getPacketErrorCount(IQtiImsExtListener listener) {
-            onGetPacketErrorCount(listener);
+        public void getPacketErrorCount(int phoneId, IQtiImsExtListener listener) {
+            onGetPacketErrorCount(phoneId, listener);
         }
 
         @Override
@@ -72,8 +72,8 @@ public abstract class QtiImsExtBase {
         }
 
         @Override
-        public void resumePendingCall(int videoState) {
-            onResumePendingCall(videoState);
+        public void resumePendingCall(int phoneId, int videoState) {
+            onResumePendingCall(phoneId, videoState);
         }
 
         @Override
@@ -83,23 +83,18 @@ public abstract class QtiImsExtBase {
         }
 
         @Override
-        public void queryVopsStatus(IQtiImsExtListener listener) {
-            onQueryVopsStatus(listener);
+        public void queryVopsStatus(int phoneId, IQtiImsExtListener listener) {
+            onQueryVopsStatus(phoneId, listener);
         }
 
         @Override
-        public void querySsacStatus(IQtiImsExtListener listener) {
-            onQuerySsacStatus(listener);
+        public void querySsacStatus(int phoneId, IQtiImsExtListener listener) {
+            onQuerySsacStatus(phoneId, listener);
         }
 
         @Override
-        public int getImsPhoneId() {
-            return onGetImsPhoneId();
-        }
-
-        @Override
-        public void registerForParticipantStatusInfo(IQtiImsExtListener listener) {
-            onRegisterForParticipantStatusInfo(listener);
+        public void registerForParticipantStatusInfo(int phoneId, IQtiImsExtListener listener) {
+            onRegisterForParticipantStatusInfo(phoneId, listener);
         }
 
         @Override
@@ -114,14 +109,14 @@ public abstract class QtiImsExtBase {
         }
 
         @Override
-        public void getHandoverConfig(IQtiImsExtListener listener) {
-            onGetHandoverConfig(listener);
+        public void getHandoverConfig(int phoneId, IQtiImsExtListener listener) {
+            onGetHandoverConfig(phoneId, listener);
         }
 
         @Override
-        public void setHandoverConfig(int hoConfig,
+        public void setHandoverConfig(int phoneId, int hoConfig,
                 IQtiImsExtListener listener) {
-            onSetHandoverConfig(hoConfig, listener);
+            onSetHandoverConfig(phoneId, hoConfig, listener);
         }
     };
 
@@ -134,45 +129,42 @@ public abstract class QtiImsExtBase {
         return mQtiImsExtBinder;
     }
 
-    protected void onSetCallForwardUncondTimer(int startHour, int startMinute, int endHour,
-            int endMinute, int action, int condition, int serviceClass, String number,
+    protected void onSetCallForwardUncondTimer(int phoneId, int startHour, int startMinute,
+            int endHour, int endMinute, int action, int condition, int serviceClass, String number,
             IQtiImsExtListener listener) {
         // no-op
     }
-    protected void onGetCallForwardUncondTimer(int reason, int serviceClass,
+    protected void onGetCallForwardUncondTimer(int phoneId, int reason, int serviceClass,
             IQtiImsExtListener listener) {
         // no-op
     }
-    protected void onGetPacketCount(IQtiImsExtListener listener) {
+    protected void onGetPacketCount(int phoneId, IQtiImsExtListener listener) {
         // no-op
     }
-    protected void onGetPacketErrorCount(IQtiImsExtListener listener) {
+    protected void onGetPacketErrorCount(int phoneId, IQtiImsExtListener listener) {
         // no-op
     }
     protected void onSendCallDeflectRequest(int phoneId, String deflectNumber,
             IQtiImsExtListener listener) {
         // no-op
     }
-    protected void onResumePendingCall(int videoState) {
+    protected void onResumePendingCall(int phoneId, int videoState) {
         // no-op
     }
     protected void onSendCallTransferRequest(int phoneId, int type, String number,
             IQtiImsExtListener listener) {
         // no-op
     }
-    protected void onQueryVopsStatus(IQtiImsExtListener listener) {
+    protected void onQueryVopsStatus(int phoneId, IQtiImsExtListener listener) {
         // no-op
     }
-    protected void onQuerySsacStatus(IQtiImsExtListener listener) {
+    protected void onQuerySsacStatus(int phoneId, IQtiImsExtListener listener) {
         // no-op
     }
-    protected int onGetImsPhoneId() {
-        return QtiCallConstants.INVALID_PHONE_ID;
-    }
-    protected void onRegisterForViceRefreshInfo(IQtiImsExtListener listener) {
+    protected void onRegisterForViceRefreshInfo(int phoneId, IQtiImsExtListener listener) {
         // no-op
     }
-    protected void onRegisterForParticipantStatusInfo(IQtiImsExtListener listener) {
+    protected void onRegisterForParticipantStatusInfo(int phoneId, IQtiImsExtListener listener) {
         // no-op
     }
     protected void onUpdateVoltePreference(int phoneId, int preference,
@@ -182,10 +174,10 @@ public abstract class QtiImsExtBase {
     protected void onQueryVoltePreference(int phoneId, IQtiImsExtListener listener) {
         // no-op
     }
-    protected void onGetHandoverConfig(IQtiImsExtListener listener) {
+    protected void onGetHandoverConfig(int phoneId, IQtiImsExtListener listener) {
         // no-op
     }
-    protected void onSetHandoverConfig(int hoConfig,
+    protected void onSetHandoverConfig(int phoneId, int hoConfig,
             IQtiImsExtListener listener) {
         // no-op
     }

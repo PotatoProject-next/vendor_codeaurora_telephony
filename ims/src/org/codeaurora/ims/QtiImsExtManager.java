@@ -1,4 +1,4 @@
-/* Copyright (c) 2016, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2016,2017 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -27,9 +27,16 @@
  */
 package org.codeaurora.ims;
 
+import android.content.Context;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.telephony.ims.feature.ImsFeature;
+import android.telephony.SubscriptionManager;
+import android.util.Log;
+
+import com.android.ims.ImsException;
+import com.android.ims.ImsManager;
 
 import org.codeaurora.ims.internal.IQtiImsExt;
 import org.codeaurora.ims.internal.IQtiImsExtListener;
@@ -45,15 +52,12 @@ import org.codeaurora.ims.QtiCallConstants;
  */
 public class QtiImsExtManager {
 
+    private static String LOG_TAG = "QtiImsExtManager";
+
     /**
      * Key to retrieve service form the ServiceManager
      */
     public static final String SERVICE_ID = "qti.ims.ext";
-
-    /**
-     * Singleton instance of the {@link QtiImsExtManager}
-     */
-    private static QtiImsExtManager sInstance;
 
     /**
      * All the QtiImsExt actions are performed using this interface,
@@ -61,53 +65,56 @@ public class QtiImsExtManager {
      * call transfer etc
      */
     private IQtiImsExt mQtiImsExt;
+    private Context mContext;
 
-    private QtiImsExtManager() {
-        // Empty Constructor
+    public QtiImsExtManager(Context context) {
+        mContext = context;
     }
 
-    public static QtiImsExtManager getInstance() {
-        if(sInstance == null) {
-            sInstance = new QtiImsExtManager();
-        }
-        return sInstance;
-    }
-
-    public void setCallForwardUncondTimer(int startHour, int startMinute, int endHour,
+    public void setCallForwardUncondTimer(int phoneId, int startHour, int startMinute, int endHour,
             int endMinute, int action, int condition, int serviceClass, String number,
             IQtiImsExtListener listener) throws QtiImsException {
         obtainBinder();
+        checkPhoneId(phoneId);
+        checkFeatureStatus(phoneId);
         try {
-            mQtiImsExt.setCallForwardUncondTimer(startHour, startMinute, endHour, endMinute, action,
-                condition, serviceClass, number, listener);
+            mQtiImsExt.setCallForwardUncondTimer(phoneId, startHour, startMinute, endHour,
+                endMinute, action, condition, serviceClass, number, listener);
         } catch(RemoteException e) {
             throw new QtiImsException("Remote ImsService setCallForwardUncondTimer : " + e);
         }
     }
 
-    public void getCallForwardUncondTimer(int reason, int serviceClass,
+    public void getCallForwardUncondTimer(int phoneId, int reason, int serviceClass,
             IQtiImsExtListener listener) throws QtiImsException {
         obtainBinder();
+        checkPhoneId(phoneId);
+        checkFeatureStatus(phoneId);
         try {
-            mQtiImsExt.getCallForwardUncondTimer(reason, serviceClass, listener);
+            mQtiImsExt.getCallForwardUncondTimer(phoneId, reason, serviceClass, listener);
         } catch(RemoteException e) {
             throw new QtiImsException("Remote ImsService getCallForwardUncondTimer : " + e);
         }
     }
 
-    public void getPacketCount(IQtiImsExtListener listener) throws QtiImsException {
+    public void getPacketCount(int phoneId, IQtiImsExtListener listener) throws QtiImsException {
         obtainBinder();
+        checkPhoneId(phoneId);
+        checkFeatureStatus(phoneId);
         try {
-            mQtiImsExt.getPacketCount(listener);
+            mQtiImsExt.getPacketCount(phoneId, listener);
         } catch(RemoteException e) {
             throw new QtiImsException("Remote ImsService getPacketCount : " + e);
         }
     }
 
-    public void getPacketErrorCount(IQtiImsExtListener listener) throws QtiImsException {
+    public void getPacketErrorCount(int phoneId, IQtiImsExtListener listener)
+            throws QtiImsException {
         obtainBinder();
+        checkPhoneId(phoneId);
+        checkFeatureStatus(phoneId);
         try {
-            mQtiImsExt.getPacketErrorCount(listener);
+            mQtiImsExt.getPacketErrorCount(phoneId, listener);
         } catch(RemoteException e) {
             throw new QtiImsException("Remote ImsService getPacketErrorCount : " + e);
         }
@@ -116,6 +123,8 @@ public class QtiImsExtManager {
     public void sendCallDeflectRequest(int phoneId, String deflectNumber,
             IQtiImsExtListener listener) throws QtiImsException {
         obtainBinder();
+        checkPhoneId(phoneId);
+        checkFeatureStatus(phoneId);
         try {
             mQtiImsExt.sendCallDeflectRequest(phoneId, deflectNumber, listener);
         } catch(RemoteException e) {
@@ -123,10 +132,12 @@ public class QtiImsExtManager {
         }
     }
 
-    public void resumePendingCall(int videoState) throws QtiImsException {
+    public void resumePendingCall(int phoneId, int videoState) throws QtiImsException {
         obtainBinder();
+        checkPhoneId(phoneId);
+        checkFeatureStatus(phoneId);
         try {
-            mQtiImsExt.resumePendingCall(videoState);
+            mQtiImsExt.resumePendingCall(phoneId, videoState);
         } catch(RemoteException e) {
             throw new QtiImsException("Remote ImsService resumePendingCall : " + e);
         }
@@ -135,6 +146,8 @@ public class QtiImsExtManager {
     public void sendCallTransferRequest(int phoneId, int type, String number,
             IQtiImsExtListener listener) throws QtiImsException {
         obtainBinder();
+        checkPhoneId(phoneId);
+        checkFeatureStatus(phoneId);
         try {
             mQtiImsExt.sendCallTransferRequest(phoneId, type, number, listener);
         } catch(RemoteException e) {
@@ -142,40 +155,35 @@ public class QtiImsExtManager {
         }
     }
 
-    public void queryVopsStatus(IQtiImsExtListener listener) throws QtiImsException {
+    public void queryVopsStatus(int phoneId, IQtiImsExtListener listener) throws QtiImsException {
         obtainBinder();
+        checkPhoneId(phoneId);
+        checkFeatureStatus(phoneId);
         try {
-            mQtiImsExt.queryVopsStatus(listener);
+            mQtiImsExt.queryVopsStatus(phoneId, listener);
         } catch(RemoteException e) {
             throw new QtiImsException("Remote ImsService queryVopsStatus : " + e);
         }
     }
 
-    public void querySsacStatus(IQtiImsExtListener listener) throws QtiImsException {
+    public void querySsacStatus(int phoneId, IQtiImsExtListener listener) throws QtiImsException {
         obtainBinder();
+        checkPhoneId(phoneId);
+        checkFeatureStatus(phoneId);
         try {
-            mQtiImsExt.querySsacStatus(listener);
+            mQtiImsExt.querySsacStatus(phoneId, listener);
         } catch(RemoteException e) {
             throw new QtiImsException("Remote ImsService querySsacStatus : " + e);
         }
     }
 
-    public int getImsPhoneId() throws QtiImsException {
-        obtainBinder();
-        int imsPhoneId = QtiCallConstants.INVALID_PHONE_ID;
-        try {
-            imsPhoneId = mQtiImsExt.getImsPhoneId();
-        } catch(RemoteException e) {
-            throw new QtiImsException("Remote ImsService getImsPhoneId : " + e);
-        }
-        return imsPhoneId;
-    }
-
-    public void registerForParticipantStatusInfo(IQtiImsExtListener listener)
+    public void registerForParticipantStatusInfo(int phoneId, IQtiImsExtListener listener)
             throws QtiImsException {
         obtainBinder();
+        checkPhoneId(phoneId);
+        checkFeatureStatus(phoneId);
         try {
-            mQtiImsExt.registerForParticipantStatusInfo(listener);
+            mQtiImsExt.registerForParticipantStatusInfo(phoneId, listener);
         } catch(RemoteException e) {
             throw new QtiImsException("Remote ImsService registerForParticipantStatusInfo : " + e);
         }
@@ -184,6 +192,8 @@ public class QtiImsExtManager {
     public void updateVoltePreference(int phoneId, int preference,
             IQtiImsExtListener listener) throws QtiImsException {
         obtainBinder();
+        checkPhoneId(phoneId);
+        checkFeatureStatus(phoneId);
         try {
             mQtiImsExt.updateVoltePreference(phoneId, preference, listener);
         } catch(RemoteException e) {
@@ -194,6 +204,8 @@ public class QtiImsExtManager {
     public void queryVoltePreference(int phoneId,
             IQtiImsExtListener listener) throws QtiImsException {
         obtainBinder();
+        checkPhoneId(phoneId);
+        checkFeatureStatus(phoneId);
         try {
             mQtiImsExt.queryVoltePreference(phoneId, listener);
         } catch(RemoteException e) {
@@ -201,20 +213,24 @@ public class QtiImsExtManager {
         }
     }
 
-    public void getHandoverConfig(IQtiImsExtListener listener) throws QtiImsException {
+    public void getHandoverConfig(int phoneId, IQtiImsExtListener listener) throws QtiImsException {
         obtainBinder();
+        checkPhoneId(phoneId);
+        checkFeatureStatus(phoneId);
         try {
-            mQtiImsExt.getHandoverConfig(listener);
+            mQtiImsExt.getHandoverConfig(phoneId, listener);
         } catch(RemoteException e) {
             throw new QtiImsException("Remote ImsService getHandoverConfig : " + e);
         }
     }
 
-    public void setHandoverConfig(int hoConfig, IQtiImsExtListener listener)
+    public void setHandoverConfig(int phoneId, int hoConfig, IQtiImsExtListener listener)
            throws QtiImsException {
         obtainBinder();
+        checkPhoneId(phoneId);
+        checkFeatureStatus(phoneId);
         try {
-            mQtiImsExt.setHandoverConfig(hoConfig, listener);
+            mQtiImsExt.setHandoverConfig(phoneId, hoConfig, listener);
         } catch(RemoteException e) {
             throw new QtiImsException("Remote ImsService setHandoverConfig : " + e);
         }
@@ -232,8 +248,42 @@ public class QtiImsExtManager {
             if (mQtiImsExt == null) {
                 throw new QtiImsException("ImsService is not running");
             }
+
+            try {
+                b.linkToDeath(()->this.handleQtiImsExtServiceDeath(), 0);
+            } catch (RemoteException e) {
+                Log.e(LOG_TAG, "Unable to listen for QtiImsExt service death");
+            }
+
             return mQtiImsExt;
         }
         return mQtiImsExt;
+    }
+
+    private void handleQtiImsExtServiceDeath() {
+        mQtiImsExt = null;
+        Log.i(LOG_TAG, "qtiImsExtDeathListener QtiImsExt binder died");
+    }
+
+    private void checkPhoneId(int phoneId) throws QtiImsException {
+        if (!SubscriptionManager.isValidPhoneId(phoneId)) {
+            Log.e(LOG_TAG, "phoneId " + phoneId + " is not valid");
+            throw new QtiImsException("invalid phoneId");
+        }
+    }
+
+    private void checkFeatureStatus(int phoneId) throws QtiImsException {
+        if (mContext == null) throw new QtiImsException("Context is null");
+
+        try {
+            if (ImsManager.getInstance(mContext, phoneId).getImsServiceStatus() !=
+                    ImsFeature.STATE_READY) {
+                Log.e(LOG_TAG, "Feature status for phoneId " + phoneId + " is not ready");
+                throw new QtiImsException("Feature state is NOT_READY");
+            }
+        } catch (ImsException e) {
+            Log.e(LOG_TAG, "Got ImsException for phoneId " + phoneId);
+            throw new QtiImsException("Feature state is NOT_READY");
+        }
     }
 }

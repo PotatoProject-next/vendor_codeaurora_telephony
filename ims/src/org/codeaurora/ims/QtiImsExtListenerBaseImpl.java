@@ -1,4 +1,4 @@
-/* Copyright (c) 2015-2016, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2015-2017, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -29,7 +29,6 @@
 package org.codeaurora.ims;
 
 import org.codeaurora.ims.internal.IQtiImsExtListener;
-import android.telephony.Rlog;
 
 /**
  * This class contains default implementation for IQtiImsExtListener.
@@ -37,61 +36,61 @@ import android.telephony.Rlog;
 public class QtiImsExtListenerBaseImpl extends IQtiImsExtListener.Stub {
 
     @Override
-    public void onSetCallForwardUncondTimer(int status) {
+    public void onSetCallForwardUncondTimer(int phoneId, int status) {
     }
 
     @Override
-    public void onGetCallForwardUncondTimer(int startHour, int endHour, int startMinute,
-            int endMinute, int reason, int status, String number, int service) {
+    public void onGetCallForwardUncondTimer(int phoneId, int startHour, int endHour,
+            int startMinute, int endMinute, int reason, int status, String number, int service) {
     }
 
     @Override
-    public void onUTReqFailed(int errCode, String errString) {
+    public void onUTReqFailed(int phoneId, int errCode, String errString) {
     }
 
     @Override
-    public void onGetPacketCount(int status, long packetCount) {
+    public void onGetPacketCount(int phoneId, int status, long packetCount) {
     }
 
     @Override
-    public void onGetPacketErrorCount(int status, long packetErrorCount) {
+    public void onGetPacketErrorCount(int phoneId, int status, long packetErrorCount) {
     }
 
     @Override
-    public void receiveCallDeflectResponse(int result) {
+    public void receiveCallDeflectResponse(int phoneId, int result) {
     }
 
     @Override
-    public void receiveCallTransferResponse(int result) {
+    public void receiveCallTransferResponse(int phoneId, int result) {
     }
 
     @Override
-    public void notifyVopsStatus(boolean vopsStatus) {
+    public void notifyVopsStatus(int phoneId, boolean vopsStatus) {
     }
 
     @Override
-    public void notifySsacStatus(boolean ssacStatusResponse) {
+    public void notifySsacStatus(int phoneId, boolean ssacStatusResponse) {
     }
 
     @Override
-    public void notifyParticipantStatusInfo(int operation, int sipStatus,
+    public void notifyParticipantStatusInfo(int phoneId, int operation, int sipStatus,
             String participantUri, boolean isEct) {
     }
 
     @Override
-    public void onVoltePreferenceUpdated(int result) {
+    public void onVoltePreferenceUpdated(int phoneId, int result) {
     }
 
     @Override
-    public void onVoltePreferenceQueried(int result, int mode) {
+    public void onVoltePreferenceQueried(int phoneId, int result, int mode) {
     }
 
     @Override
-    public void onSetHandoverConfig(int result) {
+    public void onSetHandoverConfig(int phoneId, int result) {
     }
 
     @Override
-    public void onGetHandoverConfig(int result, int hoConfig) {
+    public void onGetHandoverConfig(int phoneId, int result, int hoConfig) {
     }
 }
 

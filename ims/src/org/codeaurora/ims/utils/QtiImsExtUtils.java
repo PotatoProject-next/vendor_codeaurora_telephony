@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015,2016 The Linux Foundation. All rights reserved.
+ * Copyright (c) 2015-2017, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -327,24 +327,24 @@ public class QtiImsExtUtils {
      * Checks if the IMS Video call hide me feature is enabled or not.
      * Returns true if enabled, or false otherwise.
      */
-    public static boolean shallTransmitStaticImage(Context context) {
-        return isCarrierConfigEnabled(context, QtiCarrierConfigs.TRANSMIT_STATIC_IMAGE);
+    public static boolean shallTransmitStaticImage(int phoneId, Context context) {
+        return isCarrierConfigEnabled(phoneId, context, QtiCarrierConfigs.TRANSMIT_STATIC_IMAGE);
     }
 
     /***
      * Checks whether static image related UI elements are to be shown or not.
      * Returns true if the UI elements are to be shown, or false otherwise.
      */
-    public static boolean shallShowStaticImageUi(Context context) {
-        return isCarrierConfigEnabled(context, QtiCarrierConfigs.SHOW_STATIC_IMAGE_UI);
+    public static boolean shallShowStaticImageUi(int phoneId, Context context) {
+        return isCarrierConfigEnabled(phoneId, context, QtiCarrierConfigs.SHOW_STATIC_IMAGE_UI);
     }
 
     /***
      * Determines if feature for checking high VT quality option support is enabled or not.
      * Returns true if enabled, or false otherwise.
      */
-    public static boolean shallCheckSupportForHighVideoQuality(Context context) {
-        return isCarrierConfigEnabled(context,
+    public static boolean shallCheckSupportForHighVideoQuality(int phoneId, Context context) {
+        return isCarrierConfigEnabled(phoneId, context,
                 QtiCarrierConfigs.CHECK_SUPPORT_FOR_HIGH_VIDEO_QUALITY);
     }
 
@@ -361,8 +361,8 @@ public class QtiImsExtUtils {
      * @param context context for getting video call ui ext configuration value
      * Returns true if enabled, or false otherwise.
      */
-    public static boolean useExt(Context context) {
-        return isCarrierConfigEnabled(context, QtiCarrierConfigs.USE_VIDEO_UI_EXTENSIONS);
+    public static boolean useExt(int phoneId, Context context) {
+        return isCarrierConfigEnabled(phoneId, context, QtiCarrierConfigs.USE_VIDEO_UI_EXTENSIONS);
     }
 
    /**
@@ -370,8 +370,8 @@ public class QtiImsExtUtils {
      * @param context context for getting custom video ui configuration value
      * Returns true if enabled, or false otherwise.
      */
-    public static boolean useCustomVideoUi(Context context) {
-        return isCarrierConfigEnabled(context, QtiCarrierConfigs.USE_CUSTOM_VIDEO_UI);
+    public static boolean useCustomVideoUi(int phoneId, Context context) {
+        return isCarrierConfigEnabled(phoneId, context, QtiCarrierConfigs.USE_CUSTOM_VIDEO_UI);
     }
 
     /**
@@ -379,8 +379,8 @@ public class QtiImsExtUtils {
      * @param context context for getting the CS retry configuration value
      * Returns true if enabled, or false otherwise.
      */
-    public static boolean isCsRetryConfigEnabled(Context context) {
-        return isCarrierConfigEnabled(context, QtiCarrierConfigs.CONFIG_CS_RETRY);
+    public static boolean isCsRetryConfigEnabled(int phoneId, Context context) {
+        return isCarrierConfigEnabled(phoneId, context, QtiCarrierConfigs.CONFIG_CS_RETRY);
     }
 
     /**
@@ -394,9 +394,10 @@ public class QtiImsExtUtils {
     /**
      * Returns true if config flag is enabled.
      */
-    public static boolean isCarrierConfigEnabled(Context context, String carrierConfig) {
+    public static boolean isCarrierConfigEnabled(int phoneId, Context context,
+            String carrierConfig) {
 
-        PersistableBundle b = getConfigForDefaultImsPhoneId(context);
+        PersistableBundle b = getConfigForPhoneId(context, phoneId);
 
         if (b == null) {
             Log.e(LOG_TAG, "isCarrierConfigEnabled bundle is null");
@@ -406,21 +407,29 @@ public class QtiImsExtUtils {
         return b.getBoolean(carrierConfig, false);
     }
 
+    //TODO not removing this deprecated API to avoid compilation errors.
     public static boolean allowVideoCallsInLowBattery(Context context) {
-        return isCarrierConfigEnabled(context, QtiCarrierConfigs.ALLOW_VIDEO_CALL_IN_LOW_BATTERY);
+        return allowVideoCallsInLowBattery(QtiCallConstants.INVALID_PHONE_ID, context);
     }
 
-    public static boolean shallHidePreviewInVtConference(Context context) {
-        return isCarrierConfigEnabled(context,
+    public static boolean allowVideoCallsInLowBattery(int phoneId, Context context) {
+        return isCarrierConfigEnabled(phoneId, context,
+                QtiCarrierConfigs.ALLOW_VIDEO_CALL_IN_LOW_BATTERY);
+    }
+
+    public static boolean shallHidePreviewInVtConference(int phoneId, Context context) {
+        return isCarrierConfigEnabled(phoneId, context,
                 QtiCarrierConfigs.HIDE_PREVIEW_IN_VT_CONFERENCE);
     }
 
+    //TODO not removing this deprecated API to avoid compilation errors.
     public static boolean shallRemoveModifyCallCapability(Context context) {
-        return isCarrierConfigEnabled(context, QtiCarrierConfigs.REMOVE_MODIFY_CALL_CAPABILITY);
+        return shallRemoveModifyCallCapability(QtiCallConstants.INVALID_PHONE_ID, context);
     }
 
-    private static PersistableBundle getConfigForDefaultImsPhoneId(Context context) {
-        return getConfigForPhoneId(context, getImsPhoneId());
+    public static boolean shallRemoveModifyCallCapability(int phoneId, Context context) {
+        return isCarrierConfigEnabled(phoneId, context,
+                QtiCarrierConfigs.REMOVE_MODIFY_CALL_CAPABILITY);
     }
 
     private static PersistableBundle getConfigForPhoneId(Context context, int phoneId) {
@@ -448,19 +457,6 @@ public class QtiImsExtUtils {
         }
 
         return configManager.getConfigForSubId(subId);
-    }
-
-    /**
-     * Returns IMS phone id.
-     */
-    private static int getImsPhoneId() {
-        int phoneId = QtiCallConstants.INVALID_PHONE_ID;
-        try {
-            phoneId = QtiImsExtManager.getInstance().getImsPhoneId();
-        } catch (QtiImsException e) {
-            Log.e(LOG_TAG, "getImsPhoneId failed. Exception = " + e);
-        }
-        return phoneId;
     }
 
     /**
