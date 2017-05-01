@@ -229,5 +229,7 @@ public class QtiCallConstants {
      * Type: boolean (true if conference is supported else false)
      */
     public static final String CONF_SUPPORT_IND_EXTRA_KEY = "ConfSupportInd";
+
+    public static final String EXTRA_PHONE_ID = "phoneId";
 }
 
