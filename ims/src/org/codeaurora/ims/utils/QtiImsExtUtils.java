@@ -135,6 +135,16 @@ public class QtiImsExtUtils {
     private QtiImsExtUtils() {
     }
 
+    /** Define Video quality constants as per modem interface
+     *  Existing values are referred from
+     *      {@link ImsConfig.VideoQualityFeatureValuesConstants}
+     */
+    public static class VideoQualityFeatureValuesConstants {
+        public static final int LOW = 0;
+        public static final int MEDIUM = 1;
+        public static final int HIGH = 2;
+    }
+
     /**
      * Retrieves the call deflection stored by the user
      * Returns stored number, or null otherwise.
@@ -340,12 +350,11 @@ public class QtiImsExtUtils {
     }
 
     /***
-     * Determines if feature for checking high VT quality option support is enabled or not.
-     * Returns true if enabled, or false otherwise.
+     * Checks whether video quality realted UI elements are to be shown or not.
+     * Returns true if the UI elements are to be shown, or false otherwise.
      */
-    public static boolean shallCheckSupportForHighVideoQuality(int phoneId, Context context) {
-        return isCarrierConfigEnabled(phoneId, context,
-                QtiCarrierConfigs.CHECK_SUPPORT_FOR_HIGH_VIDEO_QUALITY);
+    public static boolean shallShowVideoQuality(int phoneId, Context context) {
+        return isCarrierConfigEnabled(phoneId, context, QtiCarrierConfigs.SHOW_VIDEO_QUALITY_UI);
     }
 
     /***
