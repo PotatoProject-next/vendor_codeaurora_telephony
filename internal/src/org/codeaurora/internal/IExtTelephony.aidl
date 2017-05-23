@@ -253,4 +253,10 @@ interface IExtTelephony {
     */
     String getSmscAddress(int slotId);
 
+    /**
+    * Check if target available with given packageName.
+    * @param packageName
+    * @return true or false
+    */
+    boolean isVendorApkAvailable(String packageName);
 }
