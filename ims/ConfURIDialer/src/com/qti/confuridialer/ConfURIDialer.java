@@ -147,7 +147,9 @@ public class ConfURIDialer extends Activity {
 
         final boolean isVideoConfUriDialEnabled = this.getResources().getBoolean(
                 R.bool.video_conference_uri_call_enabled);
-        if (isVideoConfUriDialEnabled /* is video conference call enabled? */) {
+        // Show video call buttton if video calling is enabled and not in add participant mode.
+        if (isVideoConfUriDialEnabled && isVideoTelephonyAvailable() &&
+                !(mIsAddParticipants && mIsInCall)) {
             mVideoCallButton.setEnabled(true);
             mVideoCallButton.setVisibility(View.VISIBLE);
         }
@@ -290,6 +292,12 @@ public class ConfURIDialer extends Activity {
     /** @return true if the EditText of phone number or uri digit is empty. */
     private boolean isDigitsEmpty() {
         return mEditText.length() == 0;
+    }
+
+    private boolean isVideoTelephonyAvailable() {
+        TelephonyManager telephonymanager =
+                (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        return telephonymanager.isVideoTelephonyAvailable();
     }
 
     private Intent getAddParticipantsCallIntent(String numbers){
