@@ -33,5 +33,5 @@
 -->
 <resources>
     <!-- Flag indicating whether video conference uri dial supported -->
-    <bool name="video_conference_uri_call_enabled">false</bool>
+    <bool name="video_conference_uri_call_enabled">true</bool>
 </resources>
