@@ -394,6 +394,16 @@ public class QtiImsExtUtils {
     }
 
     /**
+     * This API checks to see whether VoWiFi call quality feature is enabled or not.
+     * @param phoneId phone Id to read the configuration for specific subscription.
+     * @param context context for getting the VoWiFi call quality config value.
+     * Returns true if enabled, or false otherwise.
+     */
+    public static boolean isVoWiFiCallQualityEnabled(int phoneId, Context context) {
+        return isCarrierConfigEnabled(phoneId, context, QtiCarrierConfigs.VOWIFI_CALL_QUALITY);
+    }
+
+    /**
      * Check is carrier one supported or not
      */
     public static boolean isCarrierOneSupported() {

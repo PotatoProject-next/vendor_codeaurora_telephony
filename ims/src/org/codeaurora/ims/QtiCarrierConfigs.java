@@ -89,6 +89,9 @@ public class QtiCarrierConfigs {
        true - enabled, false - disabled */
     public static final String SHOW_STATIC_IMAGE_UI = "show_static_image_ui";
 
+    /* Config to control the voWiFi call quality indication. */
+    public static final String VOWIFI_CALL_QUALITY = "vowifi_call_quality";
+
     /* Config to determine if Carrier supports RTT
        true - enabled, false - disabled */
     public static final String KEY_CARRIER_RTT_SUPPORTED = "carrier_rtt_supported";
