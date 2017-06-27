@@ -204,6 +204,9 @@ public class ConfURIDialer extends Activity {
         mStartCallButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                //Disable call buttons to prevent multiple clicks.
+                mStartCallButton.setEnabled(false);
+                mVideoCallButton.setEnabled(false);
                 mEditNumber = mEditText.getText().toString();
                 Log.d(TAG, "onClick of CallButton number = " + mEditNumber);
                 startButtonPressed(mEditNumber, false /*isVideoCall*/);
@@ -213,6 +216,9 @@ public class ConfURIDialer extends Activity {
         mVideoCallButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                //Disable call buttons to prevent multiple clicks.
+                mVideoCallButton.setEnabled(false);
+                mStartCallButton.setEnabled(false);
                 mEditNumber = mEditText.getText().toString();
                 Log.d(TAG, "onClick of VideoCallButton number = " + mEditNumber);
                 startButtonPressed(mEditNumber, true /*isVideoCall*/);
@@ -269,7 +275,7 @@ public class ConfURIDialer extends Activity {
     }
 
     private Intent buildDialIntent(Uri uri, boolean isVideoCall) {
-        Intent intent = new Intent(Intent.ACTION_CALL, uri);
+        Intent intent = new Intent(Intent.ACTION_CALL_PRIVILEGED, uri);
         intent.putExtra(
                 TelecomManager.EXTRA_START_CALL_WITH_VIDEO_STATE,
                 isVideoCall ? VideoProfile.STATE_BIDIRECTIONAL : VideoProfile.STATE_AUDIO_ONLY);
@@ -333,6 +339,10 @@ public class ConfURIDialer extends Activity {
         if (intent != null) {
             startActivity(intent);
             finish();
+        } else {
+            //Enable call buttons if process button click failed.
+            mStartCallButton.setEnabled(true);
+            mVideoCallButton.setEnabled(true);
         }
     }
 
