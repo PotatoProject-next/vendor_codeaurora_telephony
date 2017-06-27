@@ -88,4 +88,17 @@ public class QtiCarrierConfigs {
        hide me button in active call screen etc.
        true - enabled, false - disabled */
     public static final String SHOW_STATIC_IMAGE_UI = "show_static_image_ui";
+
+    /* Config to determine if Carrier supports RTT
+       true - enabled, false - disabled */
+    public static final String KEY_CARRIER_RTT_SUPPORTED = "carrier_rtt_supported";
+
+    /* Config to determine if Carrier supports RTT for Video Calls
+       true - enabled, false - disabled */
+    public static final String KEY_CARRIER_RTT_SUPPORTED_ON_VTCALLS = "carrier_rtt_supported_on_vtcalls";
+
+    /* Config to determine if Carrier supports RTT Upgrade Operation
+     * true - if upgrade is supported else false
+     */
+    public static final String KEY_CARRIER_RTT_UPGRADE_SUPPORTED = "carrier_rtt_upgrade_supported";
 }

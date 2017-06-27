@@ -231,5 +231,60 @@ public class QtiCallConstants {
     public static final String CONF_SUPPORT_IND_EXTRA_KEY = "ConfSupportInd";
 
     public static final String EXTRA_PHONE_ID = "phoneId";
+
+    /**
+     * Whether RTT is on or off
+     * The value 1 - enable, 0 - disable
+     * This is set through ImsSettings UI
+     */
+    public static final String QTI_IMS_RTT_MODE = "rtt_mode";
+
+   /**
+     * Property for RTT Operating mode
+     * For TMO - 0 : Upon Request Mode (Disabled)
+     *           1 : Automatic Mode (Full)
+     * For Vzw - 0 : Full Mode (Full)
+     *
+     */
+    public static final String PROPERTY_RTT_OPERATING_MODE = "persist.radio.rtt.operval";
+
+    // RTT Off
+    public static final int RTT_MODE_DISABLED = 0;
+
+    // RTT On
+    public static final int RTT_MODE_FULL = 1;
+
+   /**
+     * Broadcast Action: Send RTT Text Message
+     */
+    public static final String ACTION_SEND_RTT_TEXT =
+            "org.codeaurora.intent.action.send.rtt.text";
+
+   /**
+     * RTT Text Value
+     */
+    public static final String RTT_TEXT_VALUE =
+            "org.codeaurora.intent.action.rtt.textvalue";
+
+   /**
+     * Broadcast Action: RTT Operation
+     */
+    public static final String ACTION_RTT_OPERATION =
+            "org.codeaurora.intent.action.send.rtt.operation";
+
+   /**
+     * RTT Operation Type
+     */
+    public static final String RTT_OPERATION_TYPE =
+            "org.codeaurora.intent.action.rtt.operation.type";
+
+    // RTT Operation Type can be one of the following
+    // To request upgrade of regular call to RTT call
+    public static final int RTT_UPGRADE_INITIATE = 1;
+    // To accept incoming RTT upgrade request
+    public static final int RTT_UPGRADE_CONFIRM = 2;
+    // To reject incoming RTT upgrade request
+    public static final int RTT_UPGRADE_REJECT = 3;
+
 }
 
