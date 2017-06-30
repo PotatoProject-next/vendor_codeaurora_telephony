@@ -118,6 +118,28 @@ public abstract class QtiImsExtBase {
                 IQtiImsExtListener listener) {
             onSetHandoverConfig(phoneId, hoConfig, listener);
         }
+
+        @Override
+        public int setRcsAppConfig(int phoneId, int defaultSmsApp) {
+            return onSetRcsAppConfig(phoneId, defaultSmsApp);
+        }
+
+        @Override
+        public int getRcsAppConfig(int phoneId) {
+            return onGetRcsAppConfig(phoneId);
+
+        }
+
+        @Override
+        public int setVvmAppConfig(int phoneId, int defaultVvmApp) {
+            return onSetVvmAppConfig(phoneId, defaultVvmApp);
+        }
+
+        @Override
+        public int getVvmAppConfig(int phoneId) {
+            return onGetVvmAppConfig(phoneId);
+        }
+
     };
 
     private QtiImsExtBinder mQtiImsExtBinder;
@@ -180,5 +202,21 @@ public abstract class QtiImsExtBase {
     protected void onSetHandoverConfig(int phoneId, int hoConfig,
             IQtiImsExtListener listener) {
         // no-op
+    }
+    protected int onGetVvmAppConfig(int phoneId) {
+        // no-op
+        return 0; //DUMMY VALUE
+    }
+    protected int onSetVvmAppConfig(int phoneId, int defaultVvmApp) {
+        // no-op
+        return 0; //DUMMY VALUE
+    }
+    protected int onGetRcsAppConfig(int phoneId) {
+        // no-op
+        return 0; //DUMMY VALUE
+    }
+    protected int onSetRcsAppConfig(int phoneId, int defaultSmsApp) {
+        // no-op
+        return 0; //DUMMY VALUE
     }
 }

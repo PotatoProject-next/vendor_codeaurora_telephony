@@ -35,12 +35,14 @@ import android.telephony.ims.feature.ImsFeature;
 import android.telephony.SubscriptionManager;
 import android.util.Log;
 
+import com.android.ims.ImsConfig;
 import com.android.ims.ImsException;
 import com.android.ims.ImsManager;
 
 import org.codeaurora.ims.internal.IQtiImsExt;
 import org.codeaurora.ims.internal.IQtiImsExtListener;
 import org.codeaurora.ims.QtiCallConstants;
+import org.codeaurora.ims.utils.QtiImsExtUtils;
 
 /**
  * Provides API's for IQtiImsExt Binder such as sending call deflect, call transfer etc
@@ -285,5 +287,61 @@ public class QtiImsExtManager {
             Log.e(LOG_TAG, "Got ImsException for phoneId " + phoneId);
             throw new QtiImsException("Feature state is NOT_READY");
         }
+    }
+
+    public int setRcsAppConfig(int phoneId, int defaultSmsApp) throws QtiImsException {
+        obtainBinder();
+        checkPhoneId(phoneId);
+        checkFeatureStatus(phoneId);
+        int ret = ImsConfig.OperationStatusConstants.UNKNOWN;
+        try {
+            ret = mQtiImsExt.setRcsAppConfig(phoneId, defaultSmsApp);
+        } catch(RemoteException e) {
+            throw new QtiImsException("Remote ImsService setRcsAppConfig : " + e);
+        }
+        return ret;
+    }
+
+    public int getRcsAppConfig(int phoneId) throws QtiImsException {
+        obtainBinder();
+        checkPhoneId(phoneId);
+        checkFeatureStatus(phoneId);
+        int ret = QtiImsExtUtils.QTI_IMS_SMS_APP_INVALID;
+
+        try {
+            ret = mQtiImsExt.getRcsAppConfig(phoneId);
+        } catch(RemoteException e) {
+            throw new QtiImsException("Remote ImsService getRcsAppConfig : " + e);
+        }
+
+        return ret;
+    }
+
+    public int setVvmAppConfig(int phoneId, int defaultVvmApp) throws QtiImsException {
+        obtainBinder();
+        checkPhoneId(phoneId);
+        checkFeatureStatus(phoneId);
+        int ret = ImsConfig.OperationStatusConstants.UNKNOWN;
+        try {
+            ret = mQtiImsExt.setVvmAppConfig(phoneId, defaultVvmApp);
+        } catch(RemoteException e) {
+            throw new QtiImsException("Remote ImsService setVvmAppConfig : " + e);
+        }
+        return ret;
+    }
+
+    public int getVvmAppConfig(int phoneId) throws QtiImsException {
+        obtainBinder();
+        checkPhoneId(phoneId);
+        checkFeatureStatus(phoneId);
+        int ret = QtiImsExtUtils.QTI_IMS_VVM_APP_INVALID;
+
+        try {
+            ret = mQtiImsExt.getVvmAppConfig(phoneId);
+        } catch(RemoteException e) {
+            throw new QtiImsException("Remote ImsService getVvmAppConfig : " + e);
+        }
+
+        return ret;
     }
 }
