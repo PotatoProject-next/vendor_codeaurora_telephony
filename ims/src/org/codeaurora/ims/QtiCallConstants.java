@@ -285,6 +285,7 @@ public class QtiCallConstants {
     public static final int RTT_UPGRADE_CONFIRM = 2;
     // To reject incoming RTT upgrade request
     public static final int RTT_UPGRADE_REJECT = 3;
-
+    // To request downgrade of RTT call to regular call
+    public static final int RTT_DOWNGRADE_INITIATE = 4;
 }
 

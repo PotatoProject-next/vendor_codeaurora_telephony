@@ -546,6 +546,13 @@ public class QtiImsExtUtils {
         return mode;
     }
 
+    // Returns true if Carrier supports RTT downgrade
+    // False otherwise
+    public static boolean isRttDowngradeSupported(int phoneId, Context context) {
+        return (isCarrierConfigEnabled(phoneId, context,
+                QtiCarrierConfigs.KEY_CARRIER_RTT_DOWNGRADE_SUPPORTED));
+    }
+
     // Returns true if Carrier supports Call deflection
     public static boolean isCallDeflectionSupported(int phoneId, Context context) {
         return (isCarrierConfigEnabled(phoneId, context,
