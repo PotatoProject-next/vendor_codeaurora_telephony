@@ -104,4 +104,10 @@ public class QtiCarrierConfigs {
      * true - if upgrade is supported else false
      */
     public static final String KEY_CARRIER_RTT_UPGRADE_SUPPORTED = "carrier_rtt_upgrade_supported";
+
+    /* Config to determine if Carrier supports Call Deflection
+     * true - if call deflection is supported else false
+     */
+    public static final String KEY_CARRIER_IMS_CALL_DEFLECT_SUPPORTED =
+       "config_carrier_ims_call_deflect";
 }

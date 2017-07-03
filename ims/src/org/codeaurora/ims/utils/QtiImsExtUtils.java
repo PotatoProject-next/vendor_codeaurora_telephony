@@ -60,9 +60,6 @@ public class QtiImsExtUtils {
     public static final String QTI_IMS_CALL_DEFLECT_NUMBER =
             "ims_call_deflect_number";
 
-    /* Call deflect setting name */
-    public static final String QTI_IMS_DEFLECT_ENABLED = "qti.ims.call_deflect";
-
     /* Default success value */
     public static final int QTI_IMS_REQUEST_SUCCESS = 0;
 
@@ -91,6 +88,9 @@ public class QtiImsExtUtils {
 
     /* Call transfer extra key */
     public static final String QTI_IMS_TRANSFER_EXTRA_KEY = "transferType";
+
+    /* Ims phoneId extra key */
+    public static final String QTI_IMS_PHONE_ID_EXTRA_KEY = "phoneId";
 
     /* Constants used for VOPS and SSAC feature */
     // Intent action
@@ -533,5 +533,11 @@ public class QtiImsExtUtils {
     public static int getRttOperatingMode(Context context) {
         int mode = SystemProperties.getInt(QtiCallConstants.PROPERTY_RTT_OPERATING_MODE, 0);
         return mode;
+    }
+
+    // Returns true if Carrier supports Call deflection
+    public static boolean isCallDeflectionSupported(int phoneId, Context context) {
+        return (isCarrierConfigEnabled(phoneId, context,
+                QtiCarrierConfigs.KEY_CARRIER_IMS_CALL_DEFLECT_SUPPORTED));
     }
 }
