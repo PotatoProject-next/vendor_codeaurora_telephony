@@ -259,4 +259,12 @@ interface IExtTelephony {
     * @return true or false
     */
     boolean isVendorApkAvailable(String packageName);
+
+    /**
+    * Get current primary card slot Id.
+    * @param - void
+    * @return slot index
+    */
+    int getCurrentPrimaryCardSlotId();
+
 }
