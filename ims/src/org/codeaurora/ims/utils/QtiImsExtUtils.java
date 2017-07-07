@@ -130,6 +130,17 @@ public class QtiImsExtUtils {
     public static final int QTI_IMS_HO_ENABLED_WLAN_TO_WWAN_ONLY = 0x03;
     public static final int QTI_IMS_HO_ENABLED_WWAN_TO_WLAN_ONLY = 0x04;
 
+    /*Rcs app config params */
+    public static final int QTI_IMS_SMS_APP_INVALID = -1;
+    public static final int QTI_IMS_SMS_APP_SELECTION_NOT_ALLOWED = 0;
+    public static final int QTI_IMS_SMS_APP_RCS = 1;
+    public static final int QTI_IMS_SMS_APP_NOT_RCS = 2;
+
+    /*Vvm app config params */
+    public static final int QTI_IMS_VVM_APP_INVALID = -1;
+    public static final int QTI_IMS_VVM_APP_NOT_RCS = 0;
+    public static final int QTI_IMS_VVM_APP_RCS = 1;
+
     /**
      * Private constructor for QtiImsExtUtils as we don't want to instantiate this class
      */

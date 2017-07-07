@@ -212,4 +212,56 @@ interface IQtiImsExt {
      * @throws RemoteException if calling the IMS service results in an error.
      */
     oneway void setHandoverConfig(int phoneId, int hoConfig, IQtiImsExtListener listener);
+
+   /**
+     * getRcsAppConfig
+     * Get default sms app.
+     *
+     * @param phoneId indicates the phone instance which triggered the request
+     * @return int is one of the values QTI_IMS_SMS_APP_*, as defined in
+     *        <code>org.codeaurora.ims.utils.QtiImsExtUtils</code>
+     *
+     * @throws RemoteException if calling the IMS service results in an error.
+     */
+    int getRcsAppConfig(int phoneId);
+
+   /**
+     * setRcsAppConfig
+     * Set default sms app.
+     *
+     * @param phoneId indicates the phone instance which triggered the request
+     * @param defaultSmsApp is one of the values QTI_IMS_SMS_APP_*, as defined in
+     *        <code>org.codeaurora.ims.utils.QtiImsExtUtils</code>
+     * @return int is one of the values OperationStatusConstants *, as defined in
+     *        <code>com.android.ims.ImsConfig</code>
+     *
+     * @throws RemoteException if calling the IMS service results in an error.
+     */
+    int setRcsAppConfig(int phoneId, int defaultSmsApp);
+
+   /**
+     * getVvmAppConfig
+     * Get default video voice mail app.
+     *
+     * @param phoneId indicates the phone instance which triggered the request
+     * @return int is one of the values QTI_IMS_VVM_APP_*, as defined in
+     *        <code>org.codeaurora.ims.utils.QtiImsExtUtils</code>
+     *
+     * @throws RemoteException if calling the IMS service results in an error.
+     */
+    int getVvmAppConfig(int phoneId);
+
+   /**
+     * setVvmAppConfig
+     * Set default video voice mail app.
+     *
+     * @param phoneId indicates the phone instance which triggered the request
+     * @param defaultVvmApp is one of the values QTI_IMS_VVM_APP_*, as defined in
+     *        <code>org.codeaurora.ims.utils.QtiImsExtUtils</code>
+     * @return int is one of the values OperationStatusConstants *, as defined in
+     *        <code>com.android.ims.ImsConfig</code>
+     *
+     * @throws RemoteException if calling the IMS service results in an error.
+     */
+    int setVvmAppConfig(int phoneId, int defaultVvmApp);
 }
