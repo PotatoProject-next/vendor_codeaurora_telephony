@@ -43,6 +43,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 import android.telecom.PhoneAccount;
+import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 import android.telecom.VideoProfile;
 import android.telephony.PhoneNumberUtils;
@@ -61,6 +62,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
+import java.util.List;
 import android.util.Log;
 
 /**
@@ -301,9 +303,21 @@ public class ConfURIDialer extends Activity {
     }
 
     private boolean isVideoTelephonyAvailable() {
-        TelephonyManager telephonymanager =
-                (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
-        return telephonymanager.isVideoTelephonyAvailable();
+        TelecomManager telecommMgr =
+                (TelecomManager) mContext.getSystemService(Context.TELECOM_SERVICE);
+        if (telecommMgr == null) {
+            return false;
+        }
+        List<PhoneAccountHandle> accountHandles = telecommMgr.getCallCapablePhoneAccounts();
+        for (PhoneAccountHandle accountHandle : accountHandles) {
+            PhoneAccount account = telecommMgr.getPhoneAccount(accountHandle);
+            if (account != null) {
+                if (account.hasCapabilities(PhoneAccount.CAPABILITY_VIDEO_CALLING)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private Intent getAddParticipantsCallIntent(String numbers){
