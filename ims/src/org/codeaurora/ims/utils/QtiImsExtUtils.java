@@ -427,15 +427,8 @@ public class QtiImsExtUtils {
      */
     public static boolean isCarrierConfigEnabled(int phoneId, Context context,
             String carrierConfig) {
-
-        PersistableBundle b = getConfigForPhoneId(context, phoneId);
-
-        if (b == null) {
-            Log.e(LOG_TAG, "isCarrierConfigEnabled bundle is null");
-            return false;
-        }
-
-        return b.getBoolean(carrierConfig, false);
+        return QtiCarrierConfigHelper.getInstance().getBoolean(context, phoneId,
+                carrierConfig);
     }
 
     public static boolean allowVideoCallsInLowBattery(int phoneId, Context context) {

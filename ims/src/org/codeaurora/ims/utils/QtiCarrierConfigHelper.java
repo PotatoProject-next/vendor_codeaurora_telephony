@@ -1,0 +1,183 @@
+/**
+ * Copyright (c) 2017, The Linux Foundation. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimer in the documentation and/or other materials provided
+ *       with the distribution.
+ *     * Neither the name of The Linux Foundation nor the names of its
+ *       contributors may be used to endorse or promote products derived
+ *       from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+ * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+ * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+ * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.codeaurora.ims.utils;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.PersistableBundle;
+import android.telephony.CarrierConfigManager;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
+import android.telephony.TelephonyManager;
+import android.util.Log;
+
+import com.android.internal.telephony.PhoneConstants;
+
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
+import java.util.Map;
+
+public class QtiCarrierConfigHelper {
+    private static final String TAG  = QtiCarrierConfigHelper.class.getSimpleName();
+    private static int PHONE_COUNT = TelephonyManager.getDefault().getPhoneCount();
+    private Context mContext;
+    private SubscriptionManager mSubscriptionManager;
+    private CarrierConfigManager mCarrierConfigManager;
+    private Map<Integer, PersistableBundle> mConfigsMap = new ConcurrentHashMap<>();
+    private AtomicBoolean mInitialized = new AtomicBoolean(false);
+
+    private static class SingletonHolder {
+        public final static QtiCarrierConfigHelper sInstance = new QtiCarrierConfigHelper();
+    }
+
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent != null && intent.getAction()
+                    .equals(CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED)) {
+                int subId = intent.getIntExtra(PhoneConstants.SUBSCRIPTION_KEY,
+                        SubscriptionManager.INVALID_SUBSCRIPTION_ID);
+                if (mSubscriptionManager != null) {
+                    SubscriptionInfo subInfo = mSubscriptionManager
+                            .getActiveSubscriptionInfo(subId);
+                    if (subInfo != null) {
+                        Log.d(TAG, "Reload carrier configs on sub Id: " + subId);
+                        loadConfigsForSubInfo(subInfo);
+                    } else {
+                        int phoneId = intent.getIntExtra(PhoneConstants.PHONE_KEY,
+                                SubscriptionManager.INVALID_PHONE_INDEX);
+                        if (mCarrierConfigManager != null &&
+                                mCarrierConfigManager.getConfigForSubId(subId) == null) {
+                            mConfigsMap.put(phoneId, null);
+                            Log.d(TAG, "Clear carrier configs on phone Id: " + phoneId);
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    private QtiCarrierConfigHelper () {
+    }
+
+    public static QtiCarrierConfigHelper getInstance() {
+        return SingletonHolder.sInstance;
+    }
+
+    public void setup(Context context) {
+        if (context == null) {
+            return;
+        }
+        mContext = context.getApplicationContext();
+        if (mContext != null) {
+            mInitialized.set(true);
+            mSubscriptionManager = SubscriptionManager.from(mContext);
+            mCarrierConfigManager = (CarrierConfigManager) mContext.getSystemService(
+                    Context.CARRIER_CONFIG_SERVICE);
+
+            List<SubscriptionInfo> subInfos = mSubscriptionManager
+                    .getActiveSubscriptionInfoList();
+            if (subInfos != null) {
+                for (SubscriptionInfo subInfo : subInfos) {
+                    loadConfigsForSubInfo(subInfo);
+                }
+            }
+            IntentFilter filter = new IntentFilter(CarrierConfigManager
+                    .ACTION_CARRIER_CONFIG_CHANGED);
+            mContext.registerReceiver(mReceiver, filter);
+        }
+    }
+
+    public void teardown() {
+        mConfigsMap.clear();
+        mInitialized.set(false);
+        if (mContext != null) {
+            mContext.unregisterReceiver(mReceiver);
+        }
+    }
+
+    private void loadConfigsForSubInfo(SubscriptionInfo subInfo) {
+        if (subInfo != null && mCarrierConfigManager != null) {
+            PersistableBundle pb = mCarrierConfigManager
+                     .getConfigForSubId(subInfo.getSubscriptionId());
+            if (pb != null) {
+                Log.d(TAG, "Load carrier configs on sub Id: " + subInfo.getSubscriptionId()
+                        + " slot Id: " + subInfo.getSimSlotIndex());
+                mConfigsMap.put(subInfo.getSimSlotIndex(), pb);
+            } else {
+                Log.d(TAG, "No configs on sub Id: " + subInfo.getSubscriptionId());
+                 mConfigsMap.put(subInfo.getSimSlotIndex(), null);
+            }
+        }
+    }
+
+    private void sanityCheckConfigsLoaded(Context context, int phoneId) {
+        if (context != null && mInitialized.compareAndSet(false, true)) {
+            setup(context);
+        }
+    }
+
+    public boolean isValidPhoneId(int phoneId) {
+        return 0 <= phoneId && phoneId < PHONE_COUNT;
+    }
+
+    public boolean getBoolean(Context context, int phoneId, String key) {
+        if (!isValidPhoneId(phoneId)) {
+            Log.d(TAG, "Invalid phone ID: " + phoneId);
+            return false;
+        }
+        sanityCheckConfigsLoaded(context, phoneId);
+        PersistableBundle pb = mConfigsMap.get(phoneId);
+        if (pb != null) {
+            return pb.getBoolean(key, false);
+        }
+        Log.d(TAG, "WARNING, no carrier configs on phone Id: " + phoneId);
+        return false;
+    }
+
+    public boolean getBoolean(int phoneId, String key) {
+        if (!isValidPhoneId(phoneId)) {
+            Log.d(TAG, "Invalid phone ID: " + phoneId);
+            return false;
+        }
+        PersistableBundle pb = mConfigsMap.get(phoneId);
+        if (pb != null) {
+            return pb.getBoolean(key, false);
+        }
+        if (!mInitialized.get()) {
+            Log.d(TAG, "WARNING, Don't set up yet.");
+            return false;
+        }
+        Log.d(TAG, "WARNING, no carrier configs on phone Id: " + phoneId);
+        return false;
+    }
+}
