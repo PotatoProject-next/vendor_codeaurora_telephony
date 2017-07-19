@@ -157,6 +157,18 @@ public class QtiImsExtManager {
         }
     }
 
+    public void sendCancelModifyCall(int phoneId, IQtiImsExtListener listener)
+            throws QtiImsException {
+        obtainBinder();
+        checkPhoneId(phoneId);
+        checkFeatureStatus(phoneId);
+        try {
+            mQtiImsExt.sendCancelModifyCall(phoneId, listener);
+        } catch(RemoteException e) {
+            throw new QtiImsException("Remote ImsService sendCancelModifyCall : " + e);
+        }
+    }
+
     public void queryVopsStatus(int phoneId, IQtiImsExtListener listener) throws QtiImsException {
         obtainBinder();
         checkPhoneId(phoneId);

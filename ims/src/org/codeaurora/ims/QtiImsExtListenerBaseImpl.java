@@ -65,6 +65,10 @@ public class QtiImsExtListenerBaseImpl extends IQtiImsExtListener.Stub {
     }
 
     @Override
+    public void receiveCancelModifyCallResponse(int phoneId, int result) {
+    }
+
+    @Override
     public void notifyVopsStatus(int phoneId, boolean vopsStatus) {
     }
 

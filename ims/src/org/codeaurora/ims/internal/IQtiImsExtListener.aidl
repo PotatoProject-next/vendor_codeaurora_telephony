@@ -113,6 +113,16 @@ oneway interface IQtiImsExtListener {
     void receiveCallTransferResponse(int phoneId, int result);
 
     /**
+     * Notifies client the result of cancel modify call
+     *
+     * @param phoneId indicates the phone instance which triggered the request
+     * @param <result> is one of the values QTI_IMS_REQUEST_*, as defined in
+     *        <code>org.codeaurora.ims.utils.QtiImsExtUtils.</code>
+     * @return void.
+     */
+    void receiveCancelModifyCallResponse(int phoneId, int result);
+
+    /**
      * Notifies Vops value to the clients
      *
      * @param phoneId indicates the phone instance which triggered the request

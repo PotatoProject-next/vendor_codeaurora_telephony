@@ -83,6 +83,11 @@ public abstract class QtiImsExtBase {
         }
 
         @Override
+        public void sendCancelModifyCall(int phoneId, IQtiImsExtListener listener) {
+            onSendCancelModifyCall(phoneId, listener);
+        }
+
+        @Override
         public void queryVopsStatus(int phoneId, IQtiImsExtListener listener) {
             onQueryVopsStatus(phoneId, listener);
         }
@@ -177,6 +182,11 @@ public abstract class QtiImsExtBase {
             IQtiImsExtListener listener) {
         // no-op
     }
+
+    protected void onSendCancelModifyCall(int phoneId, IQtiImsExtListener listener) {
+        // no-op
+    }
+
     protected void onQueryVopsStatus(int phoneId, IQtiImsExtListener listener) {
         // no-op
     }
