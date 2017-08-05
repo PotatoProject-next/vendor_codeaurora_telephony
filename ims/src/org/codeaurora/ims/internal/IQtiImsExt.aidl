@@ -126,6 +126,16 @@ interface IQtiImsExt {
     oneway void sendCallTransferRequest(int phoneId, int type, String number,
             IQtiImsExtListener listener);
 
+   /**
+     * sendCancelModifyCall
+     * cancel a call modify request
+     *
+     * @param phoneId indicates the phone instance which triggered the request
+     * @param listener an IQtiImsExtListener instance to indicate the response
+     * @return void
+     */
+    oneway void sendCancelModifyCall(int phoneId, IQtiImsExtListener listener);
+
     /**
      * Query Vops information
      *

@@ -551,4 +551,10 @@ public class QtiImsExtUtils {
         return (isCarrierConfigEnabled(phoneId, context,
                 QtiCarrierConfigs.KEY_CARRIER_IMS_CALL_DEFLECT_SUPPORTED));
     }
+
+    // Returns true if Carrier supports Cancel Modify Call
+    public static boolean isCancelModifyCallSupported(int phoneId, Context context) {
+        return (isCarrierConfigEnabled(phoneId, context,
+                QtiCarrierConfigs.KEY_CARRIER_CANCEL_MODIFY_CALL_SUPPORTED));
+    }
 }

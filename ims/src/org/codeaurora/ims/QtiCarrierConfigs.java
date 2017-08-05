@@ -117,4 +117,10 @@ public class QtiCarrierConfigs {
      */
     public static final String KEY_CARRIER_IMS_CALL_DEFLECT_SUPPORTED =
             "config_carrier_ims_call_deflect";
+
+    /* Config to determine if Carrier supports Cancel Modify Call
+     * true - if cancel modify call is supported else false
+     */
+    public static final String KEY_CARRIER_CANCEL_MODIFY_CALL_SUPPORTED =
+            "support_cancel_modify_call";
 }
