@@ -86,6 +86,24 @@ public class QtiCarrierConfigHelper {
         }
     };
 
+    private final SubscriptionManager.OnSubscriptionsChangedListener mOnSubscriptionsChangeListener
+            = new SubscriptionManager.OnSubscriptionsChangedListener() {
+        @Override
+        public void onSubscriptionsChanged() {
+            if (mSubscriptionManager != null) {
+                List<SubscriptionInfo> subInfos =
+                        mSubscriptionManager.getActiveSubscriptionInfoList();
+                if (subInfos != null) {
+                    for (SubscriptionInfo subInfo : subInfos) {
+                        Log.d(TAG, "Reload carrier configs on sub Id due sub changed: "
+                                + subInfo.getSubscriptionId());
+                        loadConfigsForSubInfo(subInfo);
+                    }
+                }
+            }
+        }
+    };
+
     private QtiCarrierConfigHelper () {
     }
 
@@ -114,6 +132,7 @@ public class QtiCarrierConfigHelper {
             IntentFilter filter = new IntentFilter(CarrierConfigManager
                     .ACTION_CARRIER_CONFIG_CHANGED);
             mContext.registerReceiver(mReceiver, filter);
+            mSubscriptionManager.addOnSubscriptionsChangedListener(mOnSubscriptionsChangeListener);
         }
     }
 
@@ -122,6 +141,10 @@ public class QtiCarrierConfigHelper {
         mInitialized.set(false);
         if (mContext != null) {
             mContext.unregisterReceiver(mReceiver);
+            if (mSubscriptionManager != null) {
+                mSubscriptionManager
+                        .removeOnSubscriptionsChangedListener(mOnSubscriptionsChangeListener);
+            }
         }
     }
 
