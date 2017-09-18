@@ -441,6 +441,11 @@ public class QtiImsExtUtils {
                 QtiCarrierConfigs.HIDE_PREVIEW_IN_VT_CONFERENCE);
     }
 
+    public static boolean canHoldVideoCall(int phoneId, Context context) {
+        return isCarrierConfigEnabled(phoneId, context,
+                QtiCarrierConfigs.ALLOW_HOLD_IN_VIDEO_CALL);
+    }
+
     //TODO not removing this deprecated API to avoid compilation errors.
     public static boolean shallRemoveModifyCallCapability(Context context) {
         return shallRemoveModifyCallCapability(QtiCallConstants.INVALID_PHONE_ID, context);
