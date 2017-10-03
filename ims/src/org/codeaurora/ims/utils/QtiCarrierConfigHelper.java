@@ -77,7 +77,7 @@ public class QtiCarrierConfigHelper {
                                 SubscriptionManager.INVALID_PHONE_INDEX);
                         if (mCarrierConfigManager != null &&
                                 mCarrierConfigManager.getConfigForSubId(subId) == null) {
-                            mConfigsMap.put(phoneId, null);
+                            mConfigsMap.remove(phoneId);
                             Log.d(TAG, "Clear carrier configs on phone Id: " + phoneId);
                         }
                     }
