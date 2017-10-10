@@ -118,6 +118,11 @@ public class QtiCarrierConfigs {
     public static final String KEY_CARRIER_IMS_CALL_DEFLECT_SUPPORTED =
             "config_carrier_ims_call_deflect";
 
+    /* Config to determine if carrier supports holding a video call
+     * true - if carrier supports holding a video call else false
+     */
+    public static final String ALLOW_HOLD_IN_VIDEO_CALL = "allow_holding_video_call";
+
     /* Config to determine if Carrier supports Cancel Modify Call
      * true - if cancel modify call is supported else false
      */
