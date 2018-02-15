@@ -290,7 +290,7 @@ public class QtiImsExtManager {
         if (mContext == null) throw new QtiImsException("Context is null");
 
         try {
-            if (ImsManager.getInstance(mContext, phoneId).getImsServiceStatus() !=
+            if (ImsManager.getInstance(mContext, phoneId).getImsServiceState() !=
                     ImsFeature.STATE_READY) {
                 Log.e(LOG_TAG, "Feature status for phoneId " + phoneId + " is not ready");
                 throw new QtiImsException("Feature state is NOT_READY");
@@ -347,11 +347,14 @@ public class QtiImsExtManager {
      */
     public boolean isConnected(int phoneId, int serviceType, int callType)
             throws QtiImsException {
+        return false; // TODO: Compilation hack. Replace with correct logic.
+        /*
         try {
             return ImsManager.getInstance(mContext, phoneId).isConnected(serviceType, callType);
         } catch (ImsException e) {
             throw new QtiImsException("Exception in Ims isConnected : " + e);
         }
+        */
     }
 
     /**
@@ -361,11 +364,14 @@ public class QtiImsExtManager {
      * @throws ImsException if calling the IMS service results in an error
      */
     public boolean isOpened(int phoneId) throws QtiImsException {
+        return false; // TODO: Compilation hack. Replace with correct logic.
+        /*
         try {
             return ImsManager.getInstance(mContext, phoneId).isOpened();
         } catch (ImsException e) {
             throw new QtiImsException("Exception in Ims isOpened : " + e);
         }
+        */
     }
 
     public int setVvmAppConfig(int phoneId, int defaultVvmApp) throws QtiImsException {
