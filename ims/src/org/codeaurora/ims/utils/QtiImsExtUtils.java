@@ -551,12 +551,6 @@ public class QtiImsExtUtils {
                 QtiCarrierConfigs.KEY_CARRIER_RTT_DOWNGRADE_SUPPORTED));
     }
 
-    // Returns true if Carrier supports Call deflection
-    public static boolean isCallDeflectionSupported(int phoneId, Context context) {
-        return (isCarrierConfigEnabled(phoneId, context,
-                QtiCarrierConfigs.KEY_CARRIER_IMS_CALL_DEFLECT_SUPPORTED));
-    }
-
     // Returns true if Carrier supports Cancel Modify Call
     public static boolean isCancelModifyCallSupported(int phoneId, Context context) {
         return (isCarrierConfigEnabled(phoneId, context,

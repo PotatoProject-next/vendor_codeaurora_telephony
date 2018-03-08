@@ -66,12 +66,6 @@ public abstract class QtiImsExtBase {
         }
 
         @Override
-        public void sendCallDeflectRequest(int phoneId, String deflectNumber,
-                IQtiImsExtListener listener) {
-            onSendCallDeflectRequest(phoneId, deflectNumber, listener);
-        }
-
-        @Override
         public void resumePendingCall(int phoneId, int videoState) {
             onResumePendingCall(phoneId, videoState);
         }
@@ -169,10 +163,6 @@ public abstract class QtiImsExtBase {
         // no-op
     }
     protected void onGetPacketErrorCount(int phoneId, IQtiImsExtListener listener) {
-        // no-op
-    }
-    protected void onSendCallDeflectRequest(int phoneId, String deflectNumber,
-            IQtiImsExtListener listener) {
         // no-op
     }
     protected void onResumePendingCall(int phoneId, int videoState) {

@@ -93,16 +93,6 @@ oneway interface IQtiImsExtListener {
    void onGetPacketErrorCount(int phoneId, int status, long packetErrorCount);
 
     /**
-     * Notifies client the result of call deflect request
-     *
-     * @param phoneId indicates the phone instance which triggered the request
-     * @param <result> is one of the values QTI_IMS_REQUEST_*, as defined in
-     *        <code>org.codeaurora.ims.utils.QtiImsExtUtils.</code>
-     * @return void.
-     */
-    void receiveCallDeflectResponse(int phoneId, int result);
-
-    /**
      * Notifies client the result of call transfer request
      *
      * @param phoneId indicates the phone instance which triggered the request

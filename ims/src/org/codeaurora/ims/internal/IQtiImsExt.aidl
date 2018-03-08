@@ -101,18 +101,6 @@ interface IQtiImsExt {
     oneway void getPacketErrorCount(int phoneId, IQtiImsExtListener listener);
 
    /**
-     * sendCallDeflectRequest
-     * Deflects a incoming call to given number
-     *
-     * @param phoneId indicates the phone instance which triggered the request
-     * @param deflectNumber indicates the target number to deflect
-     * @param listener an IQtiImsExtListener instance to indicate the response
-     * @return void
-     */
-    oneway void sendCallDeflectRequest(int phoneId, String deflectNumber,
-            IQtiImsExtListener listener);
-
-   /**
      * sendCallTransferRequest
      * Transfer an established call to given number or call id
      *

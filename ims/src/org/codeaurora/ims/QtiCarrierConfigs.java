@@ -112,12 +112,6 @@ public class QtiCarrierConfigs {
     public static final String KEY_CARRIER_RTT_DOWNGRADE_SUPPORTED =
             "carrier_rtt_downgrade_supported";
 
-    /* Config to determine if Carrier supports Call Deflection
-     * true - if call deflection is supported else false
-     */
-    public static final String KEY_CARRIER_IMS_CALL_DEFLECT_SUPPORTED =
-            "config_carrier_ims_call_deflect";
-
     /* Config to determine if carrier supports holding a video call
      * true - if carrier supports holding a video call else false
      */
