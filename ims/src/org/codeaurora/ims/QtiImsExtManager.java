@@ -33,6 +33,7 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.telephony.ims.feature.ImsFeature;
 import android.telephony.SubscriptionManager;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.android.ims.ImsConfig;
@@ -317,49 +318,15 @@ public class QtiImsExtManager {
         return ret;
     }
 
-    /**
-     * Checks if the IMS service has successfully registered to the IMS network
-     * with the specified service & call type.
-     *
-     * @param serviceType a service type that is specified in {@link ImsCallProfile}
-     *        {@link ImsCallProfile#SERVICE_TYPE_NORMAL}
-     *        {@link ImsCallProfile#SERVICE_TYPE_EMERGENCY}
-     * @param callType a call type that is specified in {@link ImsCallProfile}
-     *        {@link ImsCallProfile#CALL_TYPE_VOICE_N_VIDEO}
-     *        {@link ImsCallProfile#CALL_TYPE_VOICE}
-     *        {@link ImsCallProfile#CALL_TYPE_VT}
-     *        {@link ImsCallProfile#CALL_TYPE_VS}
-     * @return true if the specified service id is connected to the IMS network;
-     *        false otherwise
-     * @throws ImsException if calling the IMS service results in an error
-     */
-    public boolean isConnected(int phoneId, int serviceType, int callType)
-            throws QtiImsException {
-        return false; // TODO: Compilation hack. Replace with correct logic.
-        /*
-        try {
-            return ImsManager.getInstance(mContext, phoneId).isConnected(serviceType, callType);
-        } catch (ImsException e) {
-            throw new QtiImsException("Exception in Ims isConnected : " + e);
+    public boolean isImsRegistered(int phoneId) throws QtiImsException {
+        final int[] subIds = SubscriptionManager.getSubId(phoneId);
+        int subId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+        if (subIds != null && subIds.length >= 1) {
+            subId = subIds[0];
         }
-        */
-    }
-
-    /**
-     * Checks if the specified IMS service is opened.
-     *
-     * @return true if the specified service id is opened; false otherwise
-     * @throws ImsException if calling the IMS service results in an error
-     */
-    public boolean isOpened(int phoneId) throws QtiImsException {
-        return false; // TODO: Compilation hack. Replace with correct logic.
-        /*
-        try {
-            return ImsManager.getInstance(mContext, phoneId).isOpened();
-        } catch (ImsException e) {
-            throw new QtiImsException("Exception in Ims isOpened : " + e);
-        }
-        */
+        TelephonyManager telephonyManager =
+                (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        return telephonyManager.isImsRegistered(subId);
     }
 
     public int setVvmAppConfig(int phoneId, int defaultVvmApp) throws QtiImsException {
