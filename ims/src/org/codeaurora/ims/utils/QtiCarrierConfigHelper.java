@@ -47,12 +47,12 @@ import java.util.List;
 import java.util.Map;
 
 public class QtiCarrierConfigHelper {
-    private static final String TAG  = QtiCarrierConfigHelper.class.getSimpleName();
+    static final String TAG  = QtiCarrierConfigHelper.class.getSimpleName();
     private static int PHONE_COUNT = TelephonyManager.getDefault().getPhoneCount();
     private Context mContext;
-    private SubscriptionManager mSubscriptionManager;
-    private CarrierConfigManager mCarrierConfigManager;
-    private Map<Integer, PersistableBundle> mConfigsMap = new ConcurrentHashMap<>();
+    SubscriptionManager mSubscriptionManager;
+    CarrierConfigManager mCarrierConfigManager;
+    Map<Integer, PersistableBundle> mConfigsMap = new ConcurrentHashMap<>();
     private AtomicBoolean mInitialized = new AtomicBoolean(false);
 
     private static class SingletonHolder {
@@ -118,7 +118,8 @@ public class QtiCarrierConfigHelper {
         mContext = context.getApplicationContext();
         if (mContext != null) {
             mInitialized.set(true);
-            mSubscriptionManager = SubscriptionManager.from(mContext);
+            mSubscriptionManager = (SubscriptionManager) mContext
+                .getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
             mCarrierConfigManager = (CarrierConfigManager) mContext.getSystemService(
                     Context.CARRIER_CONFIG_SERVICE);
 
@@ -148,7 +149,7 @@ public class QtiCarrierConfigHelper {
         }
     }
 
-    private void loadConfigsForSubInfo(SubscriptionInfo subInfo) {
+    void loadConfigsForSubInfo(SubscriptionInfo subInfo) {
         if (subInfo != null && mCarrierConfigManager != null) {
             PersistableBundle pb = mCarrierConfigManager
                      .getConfigForSubId(subInfo.getSubscriptionId());
