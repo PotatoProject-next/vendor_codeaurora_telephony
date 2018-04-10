@@ -67,7 +67,7 @@ public class QtiImsExtUtils {
     public static final int QTI_IMS_REQUEST_ERROR = 1;
 
     /* name for carrier property */
-    public static final String PROPERTY_RADIO_ATEL_CARRIER = "persist.radio.atel.carrier";
+    public static final String PROPERTY_RADIO_ATEL_CARRIER = "persist.vendor.radio.atel.carrier";
 
     /* Carrier one default mcc mnc */
     public static final String CARRIER_ONE_DEFAULT_MCC_MNC = "405854";
@@ -374,7 +374,7 @@ public class QtiImsExtUtils {
      * Returns true if enabled, or false otherwise.
      */
     public static boolean isCallTransferEnabled(Context context) {
-        return SystemProperties.getBoolean("persist.radio.ims_call_transfer", false);
+        return SystemProperties.getBoolean("persist.vendor.radio.ims_call_transfer", false);
     }
 
    /**

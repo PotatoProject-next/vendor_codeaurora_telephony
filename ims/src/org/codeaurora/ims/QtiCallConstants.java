@@ -245,7 +245,7 @@ public class QtiCallConstants {
      * For Vzw - 0 : Full Mode (Full)
      *
      */
-    public static final String PROPERTY_RTT_OPERATING_MODE = "persist.radio.rtt.operval";
+    public static final String PROPERTY_RTT_OPERATING_MODE = "persist.vendor.radio.rtt.operval";
 
     // RTT Off
     public static final int RTT_MODE_DISABLED = 0;
