@@ -524,6 +524,12 @@ public class QtiImsExtUtils {
                 , QtiCarrierConfigs.KEY_CARRIER_RTT_SUPPORTED));
     }
 
+    // Returns true if Carrier supports RTT auto upgrade
+    public static boolean isRttAutoUpgradeSupported(int phoneId, Context context) {
+        return (isCarrierConfigEnabled(phoneId, context
+                , QtiCarrierConfigs.KEY_CARRIER_RTT_AUTO_UPGRADE));
+    }
+
     // Returns true if Carrier supports RTT for Video Calls
     public static boolean isRttSupportedOnVtCalls(int phoneId, Context context) {
         return (isCarrierConfigEnabled(phoneId, context,

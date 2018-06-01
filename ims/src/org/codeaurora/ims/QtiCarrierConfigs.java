@@ -96,6 +96,10 @@ public class QtiCarrierConfigs {
        true - enabled, false - disabled */
     public static final String KEY_CARRIER_RTT_SUPPORTED = "carrier_rtt_supported";
 
+    /* Config to determine if Carrier supports RTT auto upgrade
+       true - enabled, false - disabled */
+    public static final String KEY_CARRIER_RTT_AUTO_UPGRADE = "carrier_rtt_auto_upgrade";
+
     /* Config to determine if Carrier supports RTT for Video Calls
        true - enabled, false - disabled */
     public static final String KEY_CARRIER_RTT_SUPPORTED_ON_VTCALLS =
