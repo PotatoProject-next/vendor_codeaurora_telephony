@@ -1,0 +1,12 @@
+java_library {
+    name: "telephony-ext",
+    srcs: [
+        "src/org/**/*.java",
+        "src/org/**/I*.aidl",
+        "src/org/**/*.logtags",
+    ],
+
+    aidl: {
+        local_include_dirs: ["src/org"],
+    },
+}
