@@ -1,0 +1,14 @@
+
+
+android_app {
+    name: "qtiImsInCallUi",
+
+    srcs: ["**/*.java"],
+
+    sdk_version: "system_current",
+
+    certificate: "platform",
+
+    owner: "qti",
+
+}

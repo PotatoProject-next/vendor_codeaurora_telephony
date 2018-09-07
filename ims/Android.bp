@@ -1,0 +1,20 @@
+
+
+java_library {
+    name: "ims-ext-common",
+
+    aidl: {
+        local_include_dirs: ["src/org"],
+    },
+    srcs: [
+        "src/org/**/*.java",
+        "src/org/**/I*.aidl",
+        "src/org/**/*.logtags",
+    ],
+
+    libs: ["ims-common"],
+
+}
+
+// Include subdirectory makefiles
+// ============================================================
