@@ -42,6 +42,7 @@ import com.android.ims.ImsManager;
 
 import org.codeaurora.ims.internal.IQtiImsExt;
 import org.codeaurora.ims.internal.IQtiImsExtListener;
+import org.codeaurora.ims.internal.IImsMultiIdentityInterface;
 import org.codeaurora.ims.QtiCallConstants;
 import org.codeaurora.ims.utils.QtiImsExtUtils;
 
@@ -355,5 +356,30 @@ public class QtiImsExtManager {
         }
 
         return ret;
+    }
+
+    public static ImsMultiIdentityManager createImsMultiIdentityManager(
+            int phoneId, Context context) {
+        QtiImsExtManager imsExtMgr = new QtiImsExtManager(context);
+        return new ImsMultiIdentityManager(phoneId, imsExtMgr);
+    }
+
+    /*package private*/
+    IImsMultiIdentityInterface getMultiIdentityInterface(int phoneId)
+            throws QtiImsException {
+        obtainBinder();
+        checkPhoneId(phoneId);
+        checkFeatureStatus(phoneId);
+        try {
+            return mQtiImsExt.getMultiIdentityInterface(phoneId);
+        } catch(RemoteException e) {
+            throw new QtiImsException("Failed to retrieve MultiIdentityInterface : " + e);
+        }
+    }
+
+    /*package private*/
+    void validateInvariants(int phoneId)  throws QtiImsException {
+        checkPhoneId(phoneId);
+        checkFeatureStatus(phoneId);
     }
 }
