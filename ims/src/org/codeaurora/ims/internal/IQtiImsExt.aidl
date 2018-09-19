@@ -29,6 +29,7 @@
 package org.codeaurora.ims.internal;
 
 import org.codeaurora.ims.internal.IQtiImsExtListener;
+import org.codeaurora.ims.internal.IImsMultiIdentityInterface;
 
 /**
  * Interface through which APP and vendor communicates.
@@ -262,4 +263,9 @@ interface IQtiImsExt {
      * @throws RemoteException if calling the IMS service results in an error.
      */
     int setVvmAppConfig(int phoneId, int defaultVvmApp);
+
+   /**
+    * Returns the IImsMultiIdentityInterface IBinder
+    */
+    IImsMultiIdentityInterface getMultiIdentityInterface(int phoneId);
 }

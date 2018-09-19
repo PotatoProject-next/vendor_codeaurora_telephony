@@ -29,6 +29,7 @@ package org.codeaurora.ims;
 
 import org.codeaurora.ims.internal.IQtiImsExt;
 import org.codeaurora.ims.internal.IQtiImsExtListener;
+import org.codeaurora.ims.internal.IImsMultiIdentityInterface;
 import org.codeaurora.ims.QtiCallConstants;
 
 /**
@@ -139,6 +140,10 @@ public abstract class QtiImsExtBase {
             return onGetVvmAppConfig(phoneId);
         }
 
+        @Override
+        public IImsMultiIdentityInterface getMultiIdentityInterface(int phoneId) {
+            return onGetMultiIdentityInterface(phoneId);
+        }
     };
 
     private QtiImsExtBinder mQtiImsExtBinder;
@@ -218,5 +223,9 @@ public abstract class QtiImsExtBase {
     protected int onSetRcsAppConfig(int phoneId, int defaultSmsApp) {
         // no-op
         return 0; //DUMMY VALUE
+    }
+    protected IImsMultiIdentityInterface onGetMultiIdentityInterface(int phoneId) {
+        // no-op
+        return null;
     }
 }
