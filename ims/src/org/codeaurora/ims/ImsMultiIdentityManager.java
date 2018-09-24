@@ -79,6 +79,11 @@ public class ImsMultiIdentityManager {
 
     public void setMultiIdentityListener(ImsMultiIdentityListenerBase listener)
             throws QtiImsException{
+        if (listener == null) {
+            String msg = "setMultiIdentityListener :: listener is NULL";
+            Log.e(LOG_TAG, msg);
+            throw new QtiImsException(msg);
+        }
         mQtiImsExtMgr.validateInvariants(mPhoneId);
         try {
             getMultiIdentityInterface().setMultiIdentityListener(listener.getListener());
@@ -90,6 +95,11 @@ public class ImsMultiIdentityManager {
 
     public void updateRegistrationStatus(
             ArrayList<MultiIdentityLineInfo> linesInfo) throws QtiImsException{
+        if (linesInfo == null) {
+            String msg = "updateRegistrationStatus :: linesInfo is NULL";
+            Log.e(LOG_TAG, msg);
+            throw new QtiImsException(msg);
+        }
         mQtiImsExtMgr.validateInvariants(mPhoneId);
         try {
             getMultiIdentityInterface().updateRegistrationStatus(linesInfo);
@@ -100,6 +110,11 @@ public class ImsMultiIdentityManager {
     }
 
     public void queryVirtualLineInfo(String msisdn) throws QtiImsException{
+        if (msisdn == null || msisdn.isEmpty()) {
+            String msg = "queryVirtualLineInfo :: invalid msisdn";
+            Log.e(LOG_TAG, msg);
+            throw new QtiImsException(msg);
+        }
         mQtiImsExtMgr.validateInvariants(mPhoneId);
         try {
             getMultiIdentityInterface().queryVirtualLineInfo(msisdn);
