@@ -33,6 +33,13 @@ package org.codeaurora.internal;
 import org.codeaurora.internal.IDepersoResCallback;
 import org.codeaurora.internal.IDsda;
 
+import org.codeaurora.internal.SignalStrength;
+import org.codeaurora.internal.Status;
+import org.codeaurora.internal.Token;
+import org.codeaurora.internal.DcParam;
+import org.codeaurora.internal.INetworkCallback;
+import org.codeaurora.internal.Client;
+
 /**
  * Interface used to interact with the telephony framework for
  * Telephony value adds.
@@ -266,5 +273,33 @@ interface IExtTelephony {
     * @return slot index
     */
     int getCurrentPrimaryCardSlotId();
+
+    // Async api
+    Token enable5g(int slotId, in Client client);
+
+    // Async api
+    Token disable5g(int slotId, in Client client);
+
+    // Async api
+    Token enable5gOnly(int slotId, in Client client);
+
+    // Async api
+    Token query5gStatus(int slotId, in Client client);
+
+    // Async api
+    // a.k.a NR EN-DC and restrict-DCNR.
+    Token queryNrDcParam(int slotId, in Client client);
+
+    // Async api
+    Token queryNrBearerAllocation(int slotId, in Client client);
+
+    // Async api
+    Token queryNrSignalStrength(int slotId, in Client client);
+
+    // Async api
+    Client registerCallback(String packageName, INetworkCallback callback);
+
+    // Async api
+    void unRegisterCallback(INetworkCallback callback);
 
 }
