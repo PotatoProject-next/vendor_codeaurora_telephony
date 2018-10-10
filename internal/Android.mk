@@ -9,7 +9,8 @@ LOCAL_SRC_FILES := $(call all-java-files-under, src/org) \
 
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE := telephony-ext
-LOCAL_SDK_VERSION := system_current
+LOCAL_PRIVATE_PLATFORM_APIS := true
+#LOCAL_SDK_VERSION := system_current
 
 include $(BUILD_JAVA_LIBRARY)
 
