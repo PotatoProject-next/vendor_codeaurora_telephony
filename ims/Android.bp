@@ -2,6 +2,7 @@
 
 java_library {
     name: "ims-ext-common",
+    installable: true,
 
     aidl: {
         local_include_dirs: ["src/org"],
