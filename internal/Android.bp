@@ -13,7 +13,8 @@ java_library {
         "src/org/**/*.logtags",
     ],
 
-    sdk_version: "system_current",
+    platform_apis: true,
+    //LOCAL_SDK_VERSION := system_current
 
 }
 
