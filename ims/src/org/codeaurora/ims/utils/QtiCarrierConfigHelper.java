@@ -87,7 +87,12 @@ public class QtiCarrierConfigHelper {
     };
 
     private final SubscriptionManager.OnSubscriptionsChangedListener mOnSubscriptionsChangeListener
-            = new SubscriptionManager.OnSubscriptionsChangedListener() {
+            = new QtiCarrierConfigHelperOnSubscriptionsChangedListener();
+
+    private class QtiCarrierConfigHelperOnSubscriptionsChangedListener
+            extends SubscriptionManager.OnSubscriptionsChangedListener {
+        private int[] subCache = new int[PHONE_COUNT];
+
         @Override
         public void onSubscriptionsChanged() {
             if (mSubscriptionManager != null) {
@@ -95,9 +100,14 @@ public class QtiCarrierConfigHelper {
                         mSubscriptionManager.getActiveSubscriptionInfoList();
                 if (subInfos != null) {
                     for (SubscriptionInfo subInfo : subInfos) {
-                        Log.d(TAG, "Reload carrier configs on sub Id due sub changed: "
-                                + subInfo.getSubscriptionId());
-                        loadConfigsForSubInfo(subInfo);
+                        if (isValidPhoneId(subInfo.getSimSlotIndex()) &&
+                                (subCache[subInfo.getSimSlotIndex()]
+                                != subInfo.getSubscriptionId())) {
+                            subCache[subInfo.getSimSlotIndex()] = subInfo.getSubscriptionId();
+                            Log.d(TAG, "Reload carrier configs on sub Id due sub changed: "
+                                    + subInfo.getSubscriptionId());
+                            loadConfigsForSubInfo(subInfo);
+                        }
                     }
                 }
             }
@@ -159,7 +169,7 @@ public class QtiCarrierConfigHelper {
                 mConfigsMap.put(subInfo.getSimSlotIndex(), pb);
             } else {
                 Log.d(TAG, "No configs on sub Id: " + subInfo.getSubscriptionId());
-                 mConfigsMap.put(subInfo.getSimSlotIndex(), null);
+                 mConfigsMap.put(subInfo.getSimSlotIndex(), PersistableBundle.EMPTY);
             }
         }
     }
