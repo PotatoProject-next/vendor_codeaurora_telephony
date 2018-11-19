@@ -64,22 +64,19 @@ public class QtiCarrierConfigHelper {
         public void onReceive(Context context, Intent intent) {
             if (intent != null && intent.getAction()
                     .equals(CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED)) {
-                int subId = intent.getIntExtra(PhoneConstants.SUBSCRIPTION_KEY,
-                        SubscriptionManager.INVALID_SUBSCRIPTION_ID);
+                int phoneId = intent.getIntExtra(CarrierConfigManager.EXTRA_SLOT_INDEX,
+                        SubscriptionManager.INVALID_PHONE_INDEX);
                 if (mSubscriptionManager != null) {
                     SubscriptionInfo subInfo = mSubscriptionManager
-                            .getActiveSubscriptionInfo(subId);
-                    if (subInfo != null) {
-                        Log.d(TAG, "Reload carrier configs on sub Id: " + subId);
+                            .getActiveSubscriptionInfoForSimSlotIndex(phoneId);
+                    if (subInfo != null && mSubscriptionManager.isActiveSubId(
+                            subInfo.getSubscriptionId())) {
+                        Log.d(TAG, "Reload carrier configs on phone Id: " + phoneId
+                                + " sub Id: " + subInfo.getSubscriptionId());
                         loadConfigsForSubInfo(subInfo);
                     } else {
-                        int phoneId = intent.getIntExtra(PhoneConstants.PHONE_KEY,
-                                SubscriptionManager.INVALID_PHONE_INDEX);
-                        if (mCarrierConfigManager != null &&
-                                mCarrierConfigManager.getConfigForSubId(subId) == null) {
-                            mConfigsMap.remove(phoneId);
-                            Log.d(TAG, "Clear carrier configs on phone Id: " + phoneId);
-                        }
+                        Log.d(TAG, "Clear carrier configs on phone Id: " + phoneId);
+                        mConfigsMap.remove(phoneId);
                     }
                 }
             }
