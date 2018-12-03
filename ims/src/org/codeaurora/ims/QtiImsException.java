@@ -27,11 +27,17 @@
  */
 package org.codeaurora.ims;
 
+import android.telephony.ims.ImsReasonInfo;
+
 /**
  * This class is to handle custom exceptions for QtiImsExtManager
  */
 public class QtiImsException extends Exception {
 
+    /**
+     * Refer to CODE_LOCAL_* in {@link ImsReasonInfo}
+     */
+    private int mCode;
     public QtiImsException() {
         // Empty constructor
     }
@@ -41,6 +47,20 @@ public class QtiImsException extends Exception {
     }
 
     public QtiImsException(String message, Throwable cause) {
+        this(message, cause, 0);
+    }
+
+    public QtiImsException(String message, Throwable cause, int code) {
         super(message, cause);
+        mCode = code;
+    }
+
+    public QtiImsException(String message, int code) {
+        super(message + "(" + code + ")");
+        mCode = code;
+    }
+
+    public int getCode() {
+        return mCode;
     }
 }
