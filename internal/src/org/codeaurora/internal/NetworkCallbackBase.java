@@ -37,6 +37,9 @@ import org.codeaurora.internal.SignalStrength;
 import org.codeaurora.internal.DcParam;
 import org.codeaurora.internal.Status;
 import org.codeaurora.internal.Token;
+import org.codeaurora.internal.NrConfigType;
+import org.codeaurora.internal.BearerAllocationStatus;
+import org.codeaurora.internal.UpperLayerIndInfo;
 
 public class NetworkCallbackBase extends INetworkCallback.Stub {
     private static final String TAG = "NetworkCallbackBase";
@@ -56,11 +59,11 @@ public class NetworkCallbackBase extends INetworkCallback.Stub {
     }
 
     @Override
-    public void onNrBearerAllocation(int slotId, Token token, Status status, boolean
-            allocated) throws RemoteException {
+    public void onAnyNrBearerAllocation(int slotId, Token token, Status status,
+            BearerAllocationStatus bearerStatus) throws RemoteException {
         Log.d(TAG,
                 "onNrBearerAllocationChange: slotId = " + slotId + " token = " + token + " " +
-                        "status" + status + " allocated = " + allocated);
+                        "status" + status + " bearerStatus = " + bearerStatus);
     }
 
     @Override
@@ -70,5 +73,21 @@ public class NetworkCallbackBase extends INetworkCallback.Stub {
                 "onSignalStrength: slotId = " + slotId + " token = " + token + " " + "status"
                         + status + " signalStrength = " + signalStrength);
 
+    }
+
+    @Override
+    public void onUpperLayerIndInfo(int slotId, Token token, Status status,
+            UpperLayerIndInfo uilInfo) throws RemoteException {
+        Log.d(TAG,
+                "onUpperLayerIndInfo: slotId = " + slotId + " token = " + token + " " +
+                "status" + status + " UpperLayerIndInfo = " + uilInfo);
+    }
+
+    @Override
+    public void on5gConfigInfo(int slotId, Token token, Status status, NrConfigType
+            nrConfigType) throws RemoteException {
+        Log.d(TAG,
+                "on5gConfigInfo: slotId = " + slotId + " token = " + token + " " + "status"
+                + status + " NrConfigType = " + nrConfigType);
     }
 }
