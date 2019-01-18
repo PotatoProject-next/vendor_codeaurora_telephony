@@ -40,7 +40,7 @@ public class CallForwardInfo {
     public String toString() {
         return "[CallForwardInfo: status=" + (status == 0 ? " not active " : " active ")
                 + ", reason= " + reason + ", serviceClass= " + serviceClass
-                + ", timeSec= " + timeSeconds + " seconds" + "]";
-                //+ ", number=" + Log.pii(number) + "]";
+                + ", timeSec= " + timeSeconds + " seconds" + "]"
+                + ", number=" + Log.pii(number) + "]";
     }
 }
