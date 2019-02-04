@@ -64,22 +64,19 @@ public class QtiCarrierConfigHelper {
         public void onReceive(Context context, Intent intent) {
             if (intent != null && intent.getAction()
                     .equals(CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED)) {
-                int subId = intent.getIntExtra(PhoneConstants.SUBSCRIPTION_KEY,
-                        SubscriptionManager.INVALID_SUBSCRIPTION_ID);
+                int phoneId = intent.getIntExtra(CarrierConfigManager.EXTRA_SLOT_INDEX,
+                        SubscriptionManager.INVALID_PHONE_INDEX);
                 if (mSubscriptionManager != null) {
                     SubscriptionInfo subInfo = mSubscriptionManager
-                            .getActiveSubscriptionInfo(subId);
-                    if (subInfo != null) {
-                        Log.d(TAG, "Reload carrier configs on sub Id: " + subId);
+                            .getActiveSubscriptionInfoForSimSlotIndex(phoneId);
+                    if (subInfo != null && mSubscriptionManager.isActiveSubId(
+                            subInfo.getSubscriptionId())) {
+                        Log.d(TAG, "Reload carrier configs on phone Id: " + phoneId
+                                + " sub Id: " + subInfo.getSubscriptionId());
                         loadConfigsForSubInfo(subInfo);
                     } else {
-                        int phoneId = intent.getIntExtra(PhoneConstants.PHONE_KEY,
-                                SubscriptionManager.INVALID_PHONE_INDEX);
-                        if (mCarrierConfigManager != null &&
-                                mCarrierConfigManager.getConfigForSubId(subId) == null) {
-                            mConfigsMap.remove(phoneId);
-                            Log.d(TAG, "Clear carrier configs on phone Id: " + phoneId);
-                        }
+                        Log.d(TAG, "Clear carrier configs on phone Id: " + phoneId);
+                        mConfigsMap.remove(phoneId);
                     }
                 }
             }
@@ -87,7 +84,12 @@ public class QtiCarrierConfigHelper {
     };
 
     private final SubscriptionManager.OnSubscriptionsChangedListener mOnSubscriptionsChangeListener
-            = new SubscriptionManager.OnSubscriptionsChangedListener() {
+            = new QtiCarrierConfigHelperOnSubscriptionsChangedListener();
+
+    private class QtiCarrierConfigHelperOnSubscriptionsChangedListener
+            extends SubscriptionManager.OnSubscriptionsChangedListener {
+        private int[] subCache = new int[PHONE_COUNT];
+
         @Override
         public void onSubscriptionsChanged() {
             if (mSubscriptionManager != null) {
@@ -95,9 +97,14 @@ public class QtiCarrierConfigHelper {
                         mSubscriptionManager.getActiveSubscriptionInfoList();
                 if (subInfos != null) {
                     for (SubscriptionInfo subInfo : subInfos) {
-                        Log.d(TAG, "Reload carrier configs on sub Id due sub changed: "
-                                + subInfo.getSubscriptionId());
-                        loadConfigsForSubInfo(subInfo);
+                        if (isValidPhoneId(subInfo.getSimSlotIndex()) &&
+                                (subCache[subInfo.getSimSlotIndex()]
+                                != subInfo.getSubscriptionId())) {
+                            subCache[subInfo.getSimSlotIndex()] = subInfo.getSubscriptionId();
+                            Log.d(TAG, "Reload carrier configs on sub Id due sub changed: "
+                                    + subInfo.getSubscriptionId());
+                            loadConfigsForSubInfo(subInfo);
+                        }
                     }
                 }
             }
@@ -161,7 +168,7 @@ public class QtiCarrierConfigHelper {
                 mConfigsMap.put(subInfo.getSimSlotIndex(), pb);
             } else {
                 Log.d(TAG, "No configs on sub Id: " + subInfo.getSubscriptionId());
-                 mConfigsMap.put(subInfo.getSimSlotIndex(), null);
+                 mConfigsMap.put(subInfo.getSimSlotIndex(), PersistableBundle.EMPTY);
             }
         }
     }
