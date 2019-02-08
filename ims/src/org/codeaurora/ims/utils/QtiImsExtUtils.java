@@ -37,6 +37,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.PersistableBundle;
 import android.os.SystemProperties;
+import android.provider.Settings;
 import android.telephony.CarrierConfigManager;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
@@ -508,14 +509,14 @@ public class QtiImsExtUtils {
 
     // Returns value of RTT mode
     public static int getRttMode(Context context) {
-        return (android.provider.Settings.Global.getInt(context.getContentResolver(),
-                QtiCallConstants.QTI_IMS_RTT_MODE, 0));
+        return android.provider.Settings.Secure.getInt(context.getContentResolver(),
+                Settings.Secure.RTT_CALLING_MODE, 0);
     }
 
     // Sets RTT mode to global settings
     public static void setRttMode(boolean value, Context context) {
-       android.provider.Settings.Global.putInt(context.getContentResolver(),
-                QtiCallConstants.QTI_IMS_RTT_MODE, value ? 1 : 0);
+       android.provider.Settings.Secure.putInt(context.getContentResolver(),
+                Settings.Secure.RTT_CALLING_MODE, value ? 1 : 0);
     }
 
     // Returns true if Carrier supports RTT

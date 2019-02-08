@@ -237,13 +237,6 @@ public class QtiCallConstants {
 
     public static final String EXTRA_PHONE_ID = "phoneId";
 
-    /**
-     * Whether RTT is on or off
-     * The value 1 - enable, 0 - disable
-     * This is set through ImsSettings UI
-     */
-    public static final String QTI_IMS_RTT_MODE = "rtt_mode";
-
    /**
      * Property for RTT Operating mode
      * For TMO - 0 : Upon Request Mode (Disabled)
