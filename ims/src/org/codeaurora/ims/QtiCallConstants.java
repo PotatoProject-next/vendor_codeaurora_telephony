@@ -248,6 +248,13 @@ public class QtiCallConstants {
     public static final String QTI_IMS_RTT_MODE = "rtt_mode";
 
    /**
+     * Whether RTT visibility is on or off
+     * The value 1 - enable, 0 - disable
+     * This is set through ImsSettings UI
+     */
+    public static final String QTI_IMS_RTT_VISIBILITY = "rtt_mode_visibility";
+
+   /**
      * Property for RTT Operating mode
      * For TMO - 0 : Upon Request Mode (Disabled)
      *           1 : Automatic Mode (Full)
@@ -261,6 +268,12 @@ public class QtiCallConstants {
 
     // RTT On
     public static final int RTT_MODE_FULL = 1;
+
+   // RTT Visibility Off
+    public static final int RTT_VISIBILITY_DISABLED = 0;
+
+    // RTT Visibility On
+    public static final int RTT_VISIBILITY_ENABLED = 1;
 
    /**
      * Broadcast Action: Send RTT Text Message
