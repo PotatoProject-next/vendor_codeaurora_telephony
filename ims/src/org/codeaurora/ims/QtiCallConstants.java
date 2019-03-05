@@ -97,6 +97,8 @@ public class QtiCallConstants {
     public static final int CALL_FAIL_EXTRA_CODE_LOCAL_LOW_BATTERY =
             ImsReasonInfo.CODE_LOCAL_LOW_BATTERY;
 
+    /* call fail error code to retry ims call without rtt */
+    public static final int CODE_RETRY_ON_IMS_WITHOUT_RTT = 3001;
     /* Unknown disconnect cause */
     public static final int DISCONNECT_CAUSE_UNSPECIFIED = -1;
 
