@@ -14,6 +14,7 @@ java_library {
     ],
 
     platform_apis: true,
+    product_specific: true
     //LOCAL_SDK_VERSION := system_current
 
 }
