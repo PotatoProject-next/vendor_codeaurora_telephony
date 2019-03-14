@@ -54,6 +54,7 @@ public class QtiCarrierConfigHelper {
     CarrierConfigManager mCarrierConfigManager;
     Map<Integer, PersistableBundle> mConfigsMap = new ConcurrentHashMap<>();
     private AtomicBoolean mInitialized = new AtomicBoolean(false);
+    private int[] subCache;
 
     private static class SingletonHolder {
         public final static QtiCarrierConfigHelper sInstance = new QtiCarrierConfigHelper();
@@ -88,7 +89,6 @@ public class QtiCarrierConfigHelper {
 
     private class QtiCarrierConfigHelperOnSubscriptionsChangedListener
             extends SubscriptionManager.OnSubscriptionsChangedListener {
-        private int[] subCache = new int[PHONE_COUNT];
 
         @Override
         public void onSubscriptionsChanged() {
@@ -139,6 +139,7 @@ public class QtiCarrierConfigHelper {
                     loadConfigsForSubInfo(subInfo);
                 }
             }
+            subCache = new int[PHONE_COUNT];
             IntentFilter filter = new IntentFilter(CarrierConfigManager
                     .ACTION_CARRIER_CONFIG_CHANGED);
             mContext.registerReceiver(mReceiver, filter);
