@@ -72,7 +72,6 @@ public class NetworkCallbackBase extends INetworkCallback.Stub {
         Log.d(TAG,
                 "onSignalStrength: slotId = " + slotId + " token = " + token + " " + "status"
                         + status + " signalStrength = " + signalStrength);
-
     }
 
     @Override
