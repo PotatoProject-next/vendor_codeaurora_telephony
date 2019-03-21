@@ -142,6 +142,16 @@ public class QtiImsExtUtils {
     public static final int QTI_IMS_VVM_APP_NOT_RCS = 0;
     public static final int QTI_IMS_VVM_APP_RCS = 1;
 
+    /*TIR mode extra key */
+    public static final String EXTRA_TIR_OVERWRITE_ALLOWED = "incomingTir";
+    /*TIR presentation params */
+    /*TIR presentation extra key */
+    public static final String EXTRA_ANSWER_OPTION_TIR_CONFIG = "tirConfig";
+    public static final int QTI_IMS_TIR_PRESENTATION_UNRESTRICTED = 0;
+    public static final int QTI_IMS_TIR_PRESENTATION_RESTRICTED = 1;
+    public static final int QTI_IMS_TIR_PRESENTATION_DEFAULT = 2;
+
+
     /**
      * Private constructor for QtiImsExtUtils as we don't want to instantiate this class
      */
