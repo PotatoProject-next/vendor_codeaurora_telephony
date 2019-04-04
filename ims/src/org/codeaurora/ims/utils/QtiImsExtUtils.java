@@ -109,6 +109,8 @@ public class QtiImsExtUtils {
      */
     public static final String EXTRA_SSAC = "Ssac";
 
+    public static final String SUBSCRIPTION_ID = "subId";
+
     /**
      * Definitions for the volte preference values.
      */
@@ -486,7 +488,7 @@ public class QtiImsExtUtils {
     /**
      * Returns subscription id for given phone id.
      */
-    private static int getSubscriptionIdFromPhoneId(Context context, int phoneId) {
+    public static int getSubscriptionIdFromPhoneId(Context context, int phoneId) {
         SubscriptionManager subscriptionManager = SubscriptionManager.from(context);
         if (subscriptionManager == null) {
             return subscriptionManager.INVALID_SUBSCRIPTION_ID;
