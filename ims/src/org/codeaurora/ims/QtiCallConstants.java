@@ -83,6 +83,8 @@ public class QtiCallConstants {
     /*Key for verstat verification status*/
     public static final String VERSTAT_VERIFICATION_STATUS = "VerstatVerificationStatus";
 
+    public static final String VONR_INFO = "isCall5G";
+
     /* Call fail error code for handover not feasible */
     public static final int CALL_FAIL_EXTRA_CODE_LTE_3G_HA_FAILED = 149;
 
