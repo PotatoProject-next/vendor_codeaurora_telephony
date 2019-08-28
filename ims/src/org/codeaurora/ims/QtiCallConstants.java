@@ -255,10 +255,13 @@ public class QtiCallConstants {
      * Property for RTT Operating mode
      * For TMO - 0 : Upon Request Mode (Disabled)
      *           1 : Automatic Mode (Full)
-     * For Vzw - 0 : Full Mode (Full)
+     * For Vzw - 1 : Automatic Mode (Full)
      *
      */
     public static final String PROPERTY_RTT_OPERATING_MODE = "persist.vendor.radio.rtt.operval";
+
+    // RTT default phone id
+    public static final int RTT_DEFAULT_PHONE_ID = 0;
 
     // RTT Off
     public static final int RTT_MODE_DISABLED = 0;
