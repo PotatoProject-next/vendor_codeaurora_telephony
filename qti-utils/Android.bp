@@ -2,9 +2,13 @@
 java_library {
     name: "qti-telephony-utils",
     installable: true,
+    sdk_version: "system_current",
 
     srcs: ["src/org/**/*.java"],
     system_ext_specific: true,
+    libs: [
+        "androidx.annotation_annotation"
+    ],
 
 }
 

@@ -4,6 +4,7 @@ java_library {
     name: "qti-telephony-hidl-wrapper",
     installable: true,
     system_ext_specific: true,
+    sdk_version: "system_current",
 
     static_libs: [
         "android.hidl.base-V1.0-java",

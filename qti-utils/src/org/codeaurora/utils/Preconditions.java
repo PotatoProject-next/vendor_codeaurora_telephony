@@ -21,8 +21,8 @@
 
 package org.codeaurora.telephony.utils;
 
-import android.annotation.IntRange;
-import android.annotation.NonNull;
+import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.util.Collection;
