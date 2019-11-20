@@ -113,6 +113,10 @@ public class QtiImsExtUtils {
      */
     public static final String EXTRA_SSAC = "Ssac";
 
+    /* @Deprecated
+     * Use SubscriptionManager.EXTRA_SUBSCRIPTION_INDEX
+     * as key to carry sub id value instead
+     */
     public static final String SUBSCRIPTION_ID = "subId";
 
     /**
@@ -663,5 +667,10 @@ public class QtiImsExtUtils {
         return android.provider.Settings.Global.getInt(contentResolver,
                 QtiCallConstants.IMS_AUTO_REJECT + phoneId,
                 QtiCallConstants.AUTO_REJECT_CALL_DISABLED);
+    }
+
+    public static boolean canAcceptAsOneWayVideo(int phoneId, Context context) {
+        return (isCarrierConfigEnabled(phoneId, context,
+                QtiCarrierConfigs.ALLOW_ONE_WAY_ACCEPT_FOR_VIDEO_CALL));
     }
 }
