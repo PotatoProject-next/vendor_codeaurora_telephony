@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2017-2020, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -39,8 +39,6 @@ import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import com.android.internal.telephony.PhoneConstants;
-
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.List;
@@ -66,7 +64,7 @@ public class QtiCarrierConfigHelper {
             if (intent != null && intent.getAction()
                     .equals(CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED)) {
                 int phoneId = intent.getIntExtra(CarrierConfigManager.EXTRA_SLOT_INDEX,
-                        SubscriptionManager.INVALID_PHONE_INDEX);
+                        SubscriptionManager.INVALID_SIM_SLOT_INDEX);
                 if (mSubscriptionManager != null) {
                     SubscriptionInfo subInfo = mSubscriptionManager
                             .getActiveSubscriptionInfoForSimSlotIndex(phoneId);

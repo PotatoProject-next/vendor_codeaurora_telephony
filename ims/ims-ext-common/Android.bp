@@ -2,7 +2,7 @@
 java_library {
     name: "ims-ext-common",
     installable: true,
-
+    sdk_version: "system_current",
     aidl: {
         local_include_dirs: ["src/org"],
         include_dirs: [
