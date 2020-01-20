@@ -261,6 +261,24 @@ interface IExtTelephony {
     String getSmscAddress(int slotId);
 
     /**
+    * Perform incremental scan using QCRIL hooks.
+    * @param - slotId
+    *          Range: 0 <= slotId < {@link TelephonyManager#getActiveModemCount()}
+    * @return true if the request has successfully been sent to the modem, false otherwise.
+    * Requires permission: android.Manifest.permission.MODIFY_PHONE_STATE
+    */
+    boolean performIncrementalScan(int slotId);
+
+    /**
+    * Abort incremental scan using QCRIL hooks.
+    * @param - slotId
+    *          Range: 0 <= slotId < {@link TelephonyManager#getActiveModemCount()}
+    * @return true if the request has successfully been sent to the modem, false otherwise.
+    * Requires permission: android.Manifest.permission.MODIFY_PHONE_STATE
+    */
+    boolean abortIncrementalScan(int slotId);
+
+    /**
     * Check if target available with given packageName.
     * @param packageName
     * @return true or false
