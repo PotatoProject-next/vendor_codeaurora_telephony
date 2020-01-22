@@ -1,0 +1,24 @@
+
+java_library {
+    name: "qti-telephony-utils",
+    installable: true,
+
+    srcs: ["src/org/**/*.java"],
+    product_specific: true,
+
+}
+
+// ==========================================================================
+
+prebuilt_etc {
+
+    name: "qti_telephony_utils.xml",
+
+    // This will install the file in /product/etc/permissions
+    //
+
+    src: "qti_telephony_utils.xml",
+    sub_dir: "permissions",
+    product_specific: true,
+
+}
