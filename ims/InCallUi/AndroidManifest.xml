@@ -33,8 +33,7 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.qti.editnumber"
-    android:sharedUserId="android.uid.phone">
+    package="com.qti.editnumber">
 
     <application>
         <activity android:name="com.qti.editnumber.QtiEditNumberDialog"
