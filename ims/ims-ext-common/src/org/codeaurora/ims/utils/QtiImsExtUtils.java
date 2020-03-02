@@ -477,33 +477,6 @@ public class QtiImsExtUtils {
                 QtiCarrierConfigs.REMOVE_MODIFY_CALL_CAPABILITY);
     }
 
-    private static PersistableBundle getConfigForPhoneId(Context context, int phoneId) {
-        if (context == null) {
-            Log.e(LOG_TAG, "getConfigForPhoneId context is null");
-            return null;
-        }
-
-        CarrierConfigManager configManager = (CarrierConfigManager) context.getSystemService(
-                Context.CARRIER_CONFIG_SERVICE);
-        if (configManager == null) {
-            Log.e(LOG_TAG, "getConfigForPhoneId configManager is null");
-            return null;
-        }
-
-        if (phoneId == QtiCallConstants.INVALID_PHONE_ID) {
-            Log.e(LOG_TAG, "getConfigForPhoneId phoneId is invalid");
-            return null;
-        }
-
-        int subId = getSubscriptionIdFromPhoneId(context, phoneId);
-        if (!SubscriptionManager.isValidSubscriptionId(subId)) {
-            Log.e(LOG_TAG, "getConfigForPhoneId subId is invalid");
-            return null;
-        }
-
-        return configManager.getConfigForSubId(subId);
-    }
-
     /**
      * Returns subscription id for given phone id.
      */
@@ -593,32 +566,27 @@ public class QtiImsExtUtils {
 
     // Returns true if Carrier supports RTT
     public static boolean isRttSupported(int phoneId, Context context) {
-        boolean isRttSupported = false;
-        PersistableBundle b = getConfigForPhoneId(context, phoneId);
-        if (b != null) {
-            isRttSupported = b.getBoolean(
-                    CarrierConfigManager.KEY_RTT_SUPPORTED_BOOL);
-        }
-        return isRttSupported;
+        return isCarrierConfigEnabled(phoneId, context,
+            CarrierConfigManager.KEY_RTT_SUPPORTED_BOOL);
     }
 
     // Returns true if Carrier supports RTT auto upgrade
     public static boolean isRttAutoUpgradeSupported(int phoneId, Context context) {
-        return (isCarrierConfigEnabled(phoneId, context,
-            QtiCarrierConfigs.KEY_CARRIER_RTT_AUTO_UPGRADE));
+        return isCarrierConfigEnabled(phoneId, context,
+            "rtt_auto_upgrade_bool");
     }
 
     // Returns true if Carrier supports RTT for Video Calls
     public static boolean isRttSupportedOnVtCalls(int phoneId, Context context) {
-        return (isCarrierConfigEnabled(phoneId, context,
-                QtiCarrierConfigs.KEY_CARRIER_RTT_SUPPORTED_ON_VTCALLS));
+        return isCarrierConfigEnabled(phoneId, context,
+            "rtt_supported_for_vt_bool");
     }
 
     // Returns true if Carrier supports RTT upgrade
     // False otherwise
     public static boolean isRttUpgradeSupported(int phoneId, Context context) {
-        return (isCarrierConfigEnabled(phoneId, context,
-                QtiCarrierConfigs.KEY_CARRIER_RTT_UPGRADE_SUPPORTED));
+        return isCarrierConfigEnabled(phoneId, context,
+            "rtt_upgrade_supported_bool");
     }
 
     // Utility to get the RTT Mode that is set through adb property
@@ -636,8 +604,8 @@ public class QtiImsExtUtils {
     // Returns true if Carrier supports RTT downgrade
     // False otherwise
     public static boolean isRttDowngradeSupported(int phoneId, Context context) {
-        return (isCarrierConfigEnabled(phoneId, context,
-                QtiCarrierConfigs.KEY_CARRIER_RTT_DOWNGRADE_SUPPORTED));
+        return isCarrierConfigEnabled(phoneId, context,
+            "rtt_downgrade_supported_bool");
     }
 
     // Returns true if Carrier support RTT visibility setting
