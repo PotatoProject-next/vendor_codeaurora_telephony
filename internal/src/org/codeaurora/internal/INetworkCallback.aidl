@@ -41,16 +41,40 @@ import org.codeaurora.internal.NrIconType;
 
 
 interface INetworkCallback {
+    /**
+    * @deprecated
+    */
     void on5gStatus(int slotId, in Token token, in Status status, boolean enableStatus);
+
+    /**
+    *@deprecated
+    */
     void onNrDcParam(int slotId, in Token token, in Status status, in DcParam dcParam);
+
+    /**
+    * @deprecated
+    */
     void onAnyNrBearerAllocation(int slotId, in Token token, in Status status,
             in BearerAllocationStatus bearerStatus);
+
+    /**
+    * @deprecated
+    */
     void onUpperLayerIndInfo(int slotId, in Token token, in Status status,
             in UpperLayerIndInfo upperLayerInfo);
+
+    /**
+    * @deprecated
+    */
     void onSignalStrength(int slotId, in Token token, in Status status,
             in SignalStrength signalStrength);
+
+    /**
+    * @deprecated
+    */
     void on5gConfigInfo(int slotId, in Token token, in Status status,
             in NrConfigType nrConfigType);
+
     void onNrIconType(int slotId, in Token token, in Status status,
             in NrIconType nrIconType);
 

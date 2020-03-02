@@ -292,35 +292,64 @@ interface IExtTelephony {
     */
     int getCurrentPrimaryCardSlotId();
 
-    // Async api
+    /**
+    * Async api
+    * @deprecated
+    */
     Token enable5g(int slotId, in Client client);
 
-    // Async api
+    /**
+    * Async api
+    * @deprecated
+    */
     Token disable5g(int slotId, in Client client);
 
-    // Async api
+    /**
+    * Async api
+    * @deprecated
+    */
     Token enable5gOnly(int slotId, in Client client);
 
-    // Async api
+    /**
+    * Async api
+    * @deprecated
+    */
     Token query5gStatus(int slotId, in Client client);
 
-    // Async api
-    // a.k.a NR EN-DC and restrict-DCNR.
+    /**
+    * Async api
+    * a.k.a NR EN-DC and restrict-DCNR.
+    * @deprecated
+    */
     Token queryNrDcParam(int slotId, in Client client);
 
-    // Async api
+    /**
+    * Async api
+    * @deprecated
+    */
     Token queryNrBearerAllocation(int slotId, in Client client);
 
-    // Async api
+    /**
+    * Async api
+    * @deprecated
+    */
     Token queryNrSignalStrength(int slotId, in Client client);
 
-    // Async api
+    /**
+    * Async api
+    * @deprecated
+    */
     Token queryUpperLayerIndInfo(int slotId, in Client client);
 
-    // Async api
+    /**
+    * Async api
+    * @deprecated
+    */
     Token query5gConfigInfo(int slotId, in Client client);
 
-    // Async api
+    /**
+    * Async api
+    */
     Token queryNrIconType(int slotId, in Client client);
 
     /**
@@ -344,10 +373,14 @@ interface IExtTelephony {
     */
     Token queryEndcStatus(int slotId, in Client client);
 
-    // Async api
+    /**
+    * Async api
+    */
     Client registerCallback(String packageName, INetworkCallback callback);
 
-    // Async api
+    /**
+    * Async api
+    */
     void unRegisterCallback(INetworkCallback callback);
 
     /**
