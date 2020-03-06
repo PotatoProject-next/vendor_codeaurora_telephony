@@ -4,7 +4,7 @@ java_library {
     installable: true,
 
     srcs: ["src/org/**/*.java"],
-    product_specific: true,
+    system_ext_specific: true,
 
 }
 
@@ -14,11 +14,11 @@ prebuilt_etc {
 
     name: "qti_telephony_utils.xml",
 
-    // This will install the file in /product/etc/permissions
+    // This will install the file in /system_ext/etc/permissions
     //
 
     src: "qti_telephony_utils.xml",
     sub_dir: "permissions",
-    product_specific: true,
+    system_ext_specific: true,
 
 }
