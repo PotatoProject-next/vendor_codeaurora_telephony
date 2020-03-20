@@ -151,6 +151,11 @@ public abstract class QtiImsExtBase {
         public void setAnswerExtras(int phoneId, Bundle extras) {
             onSetAnswerExtras(phoneId, extras);
         }
+
+        @Override
+        public boolean isCallComposerEnabled(int phoneId) {
+            return onIsCallComposerEnabled(phoneId);
+        }
     };
 
     private QtiImsExtBinder mQtiImsExtBinder;
@@ -239,5 +244,9 @@ public abstract class QtiImsExtBase {
     }
     protected void onSetAnswerExtras(int phoneId, Bundle extras) {
         // no-op
+    }
+    protected boolean onIsCallComposerEnabled(int phoneId) {
+        // no-op
+        return false;
     }
 }

@@ -271,4 +271,15 @@ interface IQtiImsExt {
      * @return void
      */
     oneway void setUssdInfoListener(int phoneId, IQtiImsExtListener listener);
+
+    /**
+     * isCallComposerEnabled
+     * Retrieves whether IMS service CALLCOMPOSER is enabled/disabled
+     *
+     * @param phoneId indicates the phone instance which triggered the request
+     * @return boolean
+     *
+     *@throws RemoteException if calling the IMS service results in an error.
+     */
+    boolean isCallComposerEnabled(int phoneId);
 }
