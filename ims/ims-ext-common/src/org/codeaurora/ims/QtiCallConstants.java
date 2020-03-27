@@ -235,13 +235,6 @@ public class QtiCallConstants {
     public static final int VOWIFI_QUALITY_FAIR = 2;
     public static final int VOWIFI_QUALITY_POOR = 4;
 
-    /**
-     * Extra indicating the conference support from lower layers
-     * <p>
-     * Type: boolean (true if conference is supported else false)
-     */
-    public static final String CONF_SUPPORT_IND_EXTRA_KEY = "ConfSupportInd";
-
     public static final String EXTRA_PHONE_ID = "phoneId";
 
     //holds the call fail cause because of which redial is attempted

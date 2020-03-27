@@ -64,6 +64,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
+import java.util.ArrayList;
 import java.util.List;
 import android.util.Log;
 
@@ -86,11 +87,12 @@ public class ConfURIDialer extends Activity {
     private static final int ACTIVITY_REQUEST_CONTACT_PICK = 100;
     private static final String INTENT_PICK_ACTION = "android.intent.action.PICK";
     private static final String TAG = "ConfURIDialer";
-    public static final String EXTRA_DIAL_CONFERENCE_URI =
-            "org.codeaurora.extra.DIAL_CONFERENCE_URI";
     public static final String ADD_PARTICIPANT_KEY = "add_participant";
     private static final String KEY_IS_CALL_LOG_PICKER_SHOWN = "is_call_log_picker_shown";
     private static final String KEY_EXISTING_EDIT_TEXT = "existing_edit_text";
+    //ensure this extra is same the one defined in QtiCallUtils.java
+    private static final String EXTRA_ADD_PARTICIPANT_NUMBER =
+            "org.codeaurora.extra.ADD_PARTICIPANT_NUMBER";
     private boolean mIsAddParticipants = false;
     private boolean mIsInCall;
     private ConfURIDialerPhoneStateListener mPhoneStateListener;
@@ -101,13 +103,15 @@ public class ConfURIDialer extends Activity {
     private static String[] permissionsList = new String[] {
         Manifest.permission.READ_PHONE_STATE,
         Manifest.permission.READ_CALL_LOG,
-        Manifest.permission.READ_CONTACTS
+        Manifest.permission.READ_CONTACTS,
+        Manifest.permission.CALL_PHONE
     };
 
     // Request codes for required permission(s)
     public static final int REQUEST_READ_PHONE_STATE = 0;
     public static final int REQUEST_READ_CALL_LOG = 1;
     public static final int REQUEST_READ_CONTACTS = 2;
+    public static final int REQUEST_CALL_PHONE = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +128,8 @@ public class ConfURIDialer extends Activity {
 
         mPhoneStateListener = new ConfURIDialerPhoneStateListener(this);
         registerCallStateListener();
-        if (checkPermissions(REQUEST_READ_PHONE_STATE)) {
+        if (checkPermissions(REQUEST_READ_PHONE_STATE) &&
+                checkPermissions(REQUEST_CALL_PHONE)) {
             mIsInCall = isInCall(mContext);
             displayStartCall();
             displayVideoConf();
@@ -226,7 +231,8 @@ public class ConfURIDialer extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (checkPermissions(REQUEST_READ_PHONE_STATE)) {
+        if (checkPermissions(REQUEST_READ_PHONE_STATE) &&
+                checkPermissions(REQUEST_CALL_PHONE)) {
             mIsInCall = isInCall(mContext);
         }
     }
@@ -265,25 +271,20 @@ public class ConfURIDialer extends Activity {
         tm.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
     }
 
-    private Intent buildDialIntent(Uri uri, boolean isVideoCall) {
-        Intent intent = new Intent(Intent.ACTION_CALL_PRIVILEGED, uri);
-        intent.putExtra(
-                TelecomManager.EXTRA_START_CALL_WITH_VIDEO_STATE,
-                isVideoCall ? VideoProfile.STATE_BIDIRECTIONAL : VideoProfile.STATE_AUDIO_ONLY);
-        return intent;
-    }
-
     /* Return Uri with an appropriate scheme, accepting both SIP and usual phone call numbers. */
     private static Uri getCallUri(String number) {
         return Uri.fromParts(PhoneAccount.SCHEME_TEL, number, null);
     }
 
-    private Intent getDialConferenceCallIntent(String numbers, boolean isVideoCall) {
-        Log.d(TAG, "Dial ConferenceCall numbers: " + numbers);
-        Intent dialintent = buildDialIntent(getCallUri(numbers), isVideoCall);
-        //Put conference uri extra
-        dialintent.putExtra(EXTRA_DIAL_CONFERENCE_URI, true);
-        return dialintent;
+    private List<Uri> getConferenceCallList(String numbers) {
+        Log.d(TAG, "getConferenceCallList numbers: " + numbers);
+        String[] splitNum = numbers.split(";");
+        List<Uri> numList = new ArrayList<>();
+        for (String num : splitNum) {
+            numList.add(Uri.parse(num));
+            Log.d(TAG, "ConferenceCall uri: " + Uri.parse(num));
+        }
+        return numList;
     }
 
     /** @return true if the EditText of phone number or uri digit is empty. */
@@ -309,17 +310,14 @@ public class ConfURIDialer extends Activity {
         return false;
     }
 
-    private Intent getAddParticipantsCallIntent(String numbers){
+    private boolean validateAddParticipants(String numbers){
         Log.d(TAG, "Add Participants number: " + numbers);
         if (numbers == null || numbers.isEmpty()) {
             Toast.makeText(this, R.string.add_participant_imposible,
                     Toast.LENGTH_LONG).show();
-            return null;
-        } else {
-            Intent addParticipantIntent = buildDialIntent(getCallUri(numbers), false);
-            addParticipantIntent.putExtra(ADD_PARTICIPANT_KEY, true);
-            return addParticipantIntent;
+            return false;
         }
+        return true;
     }
 
     private static TelecomManager getTelecomManager(Context context) {
@@ -331,21 +329,34 @@ public class ConfURIDialer extends Activity {
     }
 
     private void startButtonPressed(String number, boolean isVideoCall) {
-
         Log.d(TAG, "startButtonPressed, number: " + number);
-        Intent intent;
         if (mIsAddParticipants && isInCall(this)) {
-            intent = getAddParticipantsCallIntent(number);
+            boolean isAddParticipant = validateAddParticipants(number);
+            if (isAddParticipant) {
+                getIntent().putExtra(EXTRA_ADD_PARTICIPANT_NUMBER, number);
+                setResult(Activity.RESULT_OK, getIntent());
+                finish();
+            } else {
+                //Enable call buttons if process button click failed.
+                mStartCallButton.setEnabled(true);
+                mVideoCallButton.setEnabled(true);
+            }
         } else {
-            intent = getDialConferenceCallIntent(number, isVideoCall);
-        }
-        if (intent != null) {
-            startActivity(intent);
+            List<Uri> numList = getConferenceCallList(number);
+            TelecomManager tm = getTelecomManager(mContext);
+            if (tm == null) {
+                //Enable call buttons if process button click failed.
+                mStartCallButton.setEnabled(true);
+                mVideoCallButton.setEnabled(true);
+                return;
+            }
+            Bundle extras = new Bundle();
+            extras.putInt(TelecomManager.EXTRA_START_CALL_WITH_VIDEO_STATE,
+                    isVideoCall ? VideoProfile.STATE_BIDIRECTIONAL : VideoProfile.STATE_AUDIO_ONLY);
+            extras.putBoolean(TelecomManager.EXTRA_START_CALL_WITH_SPEAKERPHONE,
+                    isVideoCall? true : false);
+            tm.startConference(numList, extras);
             finish();
-        } else {
-            //Enable call buttons if process button click failed.
-            mStartCallButton.setEnabled(true);
-            mVideoCallButton.setEnabled(true);
         }
     }
 
@@ -466,8 +477,7 @@ public class ConfURIDialer extends Activity {
             if (mPhoneCallState == -1) {
                 mPhoneCallState = state;
             }
-            Log.d(TAG, "PhoneStateListener new state: " + state + " old state: " + mPhoneCallState
-                    + " isAddParticipant: " + mIsAddParticipants);
+            Log.d(TAG, "PhoneStateListener new state: " + state + " old state: " + mPhoneCallState);
             if (state == TelephonyManager.CALL_STATE_IDLE && state != mPhoneCallState) {
                 mPhoneCallState = state;
                 //PhoneState idle, clear ConfURIDialer if it's for add participant.
@@ -530,7 +540,8 @@ public class ConfURIDialer extends Activity {
             Log.e(TAG, "onRequestPermissionsResult: incorrect grantResults length");
             return;
         }
-        if (reqCode == REQUEST_READ_PHONE_STATE) {
+        if (reqCode == REQUEST_READ_PHONE_STATE ||
+                reqCode == REQUEST_CALL_PHONE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mIsInCall = isInCall(this);
                 displayStartCall();
