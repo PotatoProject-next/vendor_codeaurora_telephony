@@ -1,4 +1,4 @@
-/* Copyright (c) 2015, 2019 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2015, 2019-2020 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -325,6 +325,7 @@ public class QtiCallConstants {
     public static final int QTI_CONFIG_SMS_APP = 1001;
     public static final int QTI_CONFIG_VVM_APP = 1002;
     public static final int QTI_CONFIG_VOWIFI_ROAMING_MODE_PREFERENCE = 1003;
+    public static final int CALL_COMPOSER_MODE = 1004;
 
     /**
      * Key values for the Call Composer elements sent through the dial request
@@ -364,5 +365,14 @@ public class QtiCallConstants {
     // Type: double
     public static String EXTRA_CALL_COMPOSER_LOCATION_LONGITUDE =
             "call_composer_location_longitude";
+
+    /**
+     * User setting to control whether dialing call composer calls are allowed
+     * Type: int (0 for disable, 1 for enabled);
+     */
+    public static final String IMS_CALL_COMPOSER = "qti.settings.call_composer";
+    public static final int CALL_COMPOSER_DISABLED = 0;
+    public static final int CALL_COMPOSER_ENABLED = 1;
+
 }
 
