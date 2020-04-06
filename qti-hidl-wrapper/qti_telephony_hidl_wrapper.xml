@@ -31,5 +31,5 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 <permissions>
  <library name="qti-telephony-hidl-wrapper"
-         file="/product/framework/qti-telephony-hidl-wrapper.jar"/>
+         file="/system_ext/framework/qti-telephony-hidl-wrapper.jar"/>
 </permissions>

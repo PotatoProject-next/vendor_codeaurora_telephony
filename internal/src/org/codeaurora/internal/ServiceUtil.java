@@ -42,7 +42,7 @@ public class ServiceUtil {
     private ServiceUtil() {}
 
     static public boolean bindService(Context context, ServiceConnection connection) {
-        IBinder extTelephony = ServiceManager.getService("extphone");
+        IBinder extTelephony = ServiceManager.getService("qti.radio.extphone");
 
         boolean success = (extTelephony != null)? true: false;
 

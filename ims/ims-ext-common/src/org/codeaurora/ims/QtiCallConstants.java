@@ -235,13 +235,6 @@ public class QtiCallConstants {
     public static final int VOWIFI_QUALITY_FAIR = 2;
     public static final int VOWIFI_QUALITY_POOR = 4;
 
-    /**
-     * Extra indicating the conference support from lower layers
-     * <p>
-     * Type: boolean (true if conference is supported else false)
-     */
-    public static final String CONF_SUPPORT_IND_EXTRA_KEY = "ConfSupportInd";
-
     public static final String EXTRA_PHONE_ID = "phoneId";
 
     //holds the call fail cause because of which redial is attempted
@@ -329,5 +322,8 @@ public class QtiCallConstants {
     public static final int AUTO_REJECT_CALL_ENABLED = 1;
     // Auto reject call UI item, avoid conflicting values from ImsCallUtils.ConfigItem
     public static final int AUTO_REJECT_CALL_MODE = 1000;
+    public static final int QTI_CONFIG_SMS_APP = 1001;
+    public static final int QTI_CONFIG_VVM_APP = 1002;
+    public static final int QTI_CONFIG_VOWIFI_ROAMING_MODE_PREFERENCE = 1003;
 }
 
