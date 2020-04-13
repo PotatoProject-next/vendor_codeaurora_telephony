@@ -129,16 +129,6 @@ public class QtiImsExtManager {
         }
     }
 
-    public void sendCallTransferRequest(int phoneId, int type, String number,
-            IQtiImsExtListener listener) throws QtiImsException {
-        validateInvariants(phoneId);
-        try {
-            mQtiImsExt.sendCallTransferRequest(phoneId, type, number, listener);
-        } catch(RemoteException e) {
-            throw new QtiImsException("Remote ImsService sendCallTransferRequest : " + e);
-        }
-    }
-
     public void sendCancelModifyCall(int phoneId, IQtiImsExtListener listener)
             throws QtiImsException {
         validateInvariants(phoneId);
