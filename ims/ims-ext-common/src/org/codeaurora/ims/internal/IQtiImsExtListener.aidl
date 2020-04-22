@@ -179,12 +179,4 @@ oneway interface IQtiImsExtListener {
      *
      */
    void onUssdFailed(int phoneId, int type, int errorCode, String errorMessage);
-
-   /**
-     * Notifies client that setCallBarring operation is success.
-     *
-     * onUTReqFailed API will be invoked in case of any failure in setCallBarring with password.
-     * @return void
-     */
-   void onSetCallBarring();
 }

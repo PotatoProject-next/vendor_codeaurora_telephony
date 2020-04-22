@@ -93,13 +93,5 @@ public class QtiImsExtListenerBaseImpl extends IQtiImsExtListener.Stub {
     public void onUssdFailed(int phoneId, int type, int errorCode,
             String errorMessage) {
     }
-
-    /**
-     * This API is invoked when setCallBarring with password is success to notify to clients.
-     * onUTReqFailed API will be invoked in case of any failure in setCallBarring with password.
-     */
-    @Override
-    public void onSetCallBarring() {
-    }
 }
 
