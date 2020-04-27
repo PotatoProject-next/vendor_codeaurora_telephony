@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2017, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2015-2017, 2020 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -640,5 +640,27 @@ public class QtiImsExtUtils {
     public static boolean canAcceptAsOneWayVideo(int phoneId, Context context) {
         return (isCarrierConfigEnabled(phoneId, context,
                 QtiCarrierConfigs.ALLOW_ONE_WAY_ACCEPT_FOR_VIDEO_CALL));
+    }
+
+    // Returns true if Carrier supports Call Composer
+    public static boolean isCallComposerSupported(int phoneId, Context context) {
+        return isCarrierConfigEnabled(phoneId, context,
+                QtiCarrierConfigs.KEY_CARRIER_CALL_COMPOSER_SUPPORTED);
+    }
+
+    // Stores user setting for Call Composer
+    public static void setCallComposerMode(ContentResolver contentResolver, int phoneId,
+            boolean turnOn) {
+        final int value = turnOn ? QtiCallConstants.CALL_COMPOSER_ENABLED :
+                QtiCallConstants.CALL_COMPOSER_DISABLED;
+        android.provider.Settings.Global.putInt(contentResolver,
+                QtiCallConstants.IMS_CALL_COMPOSER + phoneId, value);
+    }
+
+    // retrieves the stored user setting from the database per phone id
+    public static int getCallComposerMode(ContentResolver contentResolver, int phoneId) {
+        return android.provider.Settings.Global.getInt(contentResolver,
+                QtiCallConstants.IMS_CALL_COMPOSER + phoneId,
+                QtiCallConstants.AUTO_REJECT_CALL_DISABLED);
     }
 }
