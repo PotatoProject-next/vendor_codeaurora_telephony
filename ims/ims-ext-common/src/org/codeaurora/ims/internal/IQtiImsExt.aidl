@@ -1,4 +1,4 @@
-/* Copyright (c) 2015-2017, 2019 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2015-2017, 2019-2020 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -79,20 +79,6 @@ interface IQtiImsExt {
      * @return void
      */
     oneway void getCallForwardUncondTimer(int phoneId, int reason, int serviceClass,
-            IQtiImsExtListener listener);
-
-   /**
-     * sendCallTransferRequest
-     * Transfer an established call to given number or call id
-     *
-     * @param phoneId indicates the phone instance which triggered the request
-     * @param type is one of the values QTI_IMS_*_TRANSFER, as defined in
-     *        <code>org.codeaurora.ims.utils.QtiImsExtUtils.</code>
-     * @param number indicates the target number to transfer
-     * @param listener an IQtiImsExtListener instance to indicate the response
-     * @return void
-     */
-    oneway void sendCallTransferRequest(int phoneId, int type, String number,
             IQtiImsExtListener listener);
 
    /**
@@ -285,22 +271,4 @@ interface IQtiImsExt {
      * @return void
      */
     oneway void setUssdInfoListener(int phoneId, IQtiImsExtListener listener);
-
-   /**
-     * setCallBarring
-     * Set call barring operation with password support
-     *
-     * @param phoneId indicates the phone instance which triggered the request
-     * @param operationType is false (CommandsInterface.CF_ACTION_ENABLE) or
-                               true (CommandsInterface.CF_ACTION_DISABLE)
-     * @param facilityType type of operation same as @link ImsUtInterface.CB_*
-     * @param cbNumListInfo ICB number list
-     * @param password Password to activate/deactivate the call barring.
-     * @param serviceClass service class for call barring @link CommandsInterface.SERVICE_CLASS*
-     * @param listener an IQtiImsExtListener instance to indicate the response
-     * @return void
-     */
-    oneway void setCallBarring(int phoneId, boolean operationType, String facilityType,
-            in String[] cbNumListInfo, String password, int serviceClass,
-            IQtiImsExtListener listener);
 }

@@ -1,4 +1,4 @@
-/* Copyright (c) 2015-2016, 2019 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2015-2016, 2019-2020 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -71,16 +71,6 @@ oneway interface IQtiImsExtListener {
      * @return void.
      */
     void onUTReqFailed(int phoneId, int errCode, String errString);
-
-    /**
-     * Notifies client the result of call transfer request
-     *
-     * @param phoneId indicates the phone instance which triggered the request
-     * @param <result> is one of the values QTI_IMS_REQUEST_*, as defined in
-     *        <code>org.codeaurora.ims.utils.QtiImsExtUtils.</code>
-     * @return void.
-     */
-    void receiveCallTransferResponse(int phoneId, int result);
 
     /**
      * Notifies client the result of cancel modify call
@@ -189,12 +179,4 @@ oneway interface IQtiImsExtListener {
      *
      */
    void onUssdFailed(int phoneId, int type, int errorCode, String errorMessage);
-
-   /**
-     * Notifies client that setCallBarring operation is success.
-     *
-     * onUTReqFailed API will be invoked in case of any failure in setCallBarring with password.
-     * @return void
-     */
-   void onSetCallBarring();
 }

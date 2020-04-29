@@ -98,11 +98,6 @@ public class QtiCarrierConfigs {
     public static final String KEY_SHOW_RTT_VISIBILITY_SETTING =
             "show_rtt_visibility_setting_bool";
 
-    /* Config to determine if carrier supports holding a video call
-     * true - if carrier supports holding a video call else false
-     */
-    public static final String ALLOW_HOLD_IN_VIDEO_CALL = "allow_holding_video_call";
-
     /* Config to determine if Carrier supports Cancel Modify Call
      * true - if cancel modify call is supported else false
      */

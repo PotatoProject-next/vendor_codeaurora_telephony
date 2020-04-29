@@ -464,7 +464,7 @@ public class QtiImsExtUtils {
 
     public static boolean canHoldVideoCall(int phoneId, Context context) {
         return isCarrierConfigEnabled(phoneId, context,
-                QtiCarrierConfigs.ALLOW_HOLD_IN_VIDEO_CALL);
+                CarrierConfigManager.KEY_ALLOW_HOLD_VIDEO_CALL_BOOL);
     }
 
     //TODO not removing this deprecated API to avoid compilation errors.

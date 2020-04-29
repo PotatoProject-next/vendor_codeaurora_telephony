@@ -1,4 +1,4 @@
-/* Copyright (c) 2016, 2017, 2019 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2016, 2017, 2019-2020 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -62,12 +62,6 @@ public abstract class QtiImsExtBase {
         @Override
         public void resumePendingCall(int phoneId, int videoState) {
             onResumePendingCall(phoneId, videoState);
-        }
-
-        @Override
-        public void sendCallTransferRequest(int phoneId, int type, String number,
-                IQtiImsExtListener listener) {
-            onSendCallTransferRequest(phoneId, type, number, listener);
         }
 
         @Override
@@ -157,14 +151,6 @@ public abstract class QtiImsExtBase {
         public void setAnswerExtras(int phoneId, Bundle extras) {
             onSetAnswerExtras(phoneId, extras);
         }
-
-        @Override
-        public void setCallBarring(int phoneId, boolean operationType, String facilityType,
-                String[] cbNumListInfo, String password, int serviceClass,
-                IQtiImsExtListener listener) {
-            onSetCallBarring(phoneId, operationType, facilityType, cbNumListInfo, password,
-                    serviceClass, listener);
-        }
     };
 
     private QtiImsExtBinder mQtiImsExtBinder;
@@ -186,10 +172,6 @@ public abstract class QtiImsExtBase {
         // no-op
     }
     protected void onResumePendingCall(int phoneId, int videoState) {
-        // no-op
-    }
-    protected void onSendCallTransferRequest(int phoneId, int type, String number,
-            IQtiImsExtListener listener) {
         // no-op
     }
 
@@ -256,14 +238,6 @@ public abstract class QtiImsExtBase {
         return ImsFeature.STATE_UNAVAILABLE; //DUMMY VALUE
     }
     protected void onSetAnswerExtras(int phoneId, Bundle extras) {
-        // no-op
-    }
-    /**
-     * To activate/deactive the call barring request with password.
-     */
-    protected void onSetCallBarring(int phoneId, boolean operationType, String facilityType,
-            String[] cbNumListInfo, String password, int serviceClass,
-            IQtiImsExtListener listener) {
         // no-op
     }
 }
