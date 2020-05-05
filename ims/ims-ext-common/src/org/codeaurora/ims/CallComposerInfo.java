@@ -119,7 +119,7 @@ public class CallComposerInfo implements Parcelable {
     public static final int PRIORITY_URGENT = 0;
     public static final int PRIORITY_NORMAL = 1;
     public static final int INVALID_CALLID = -1;
-    public static final String INVALID_TOKEN = "";
+    public static final int INVALID_TOKEN = -1;
 
     private int mPriority;
     private String mSubject;

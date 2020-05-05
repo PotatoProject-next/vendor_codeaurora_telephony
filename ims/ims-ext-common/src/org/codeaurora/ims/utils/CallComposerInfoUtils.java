@@ -43,7 +43,7 @@ public class CallComposerInfoUtils {
     private CallComposerInfoUtils() {
     }
 
-    public static CallComposerInfo buildCallComposerInfo(Bundle extras) {
+    public static CallComposerInfo fromBundle(Bundle extras) {
         CallComposerInfo.Location location = CallComposerInfo.Location.UNKNOWN;
         String subject = extras.getString(
                     QtiCallConstants.EXTRA_CALL_COMPOSER_SUBJECT, null);
@@ -67,13 +67,11 @@ public class CallComposerInfoUtils {
         return new CallComposerInfo(priority, subject, imageUrl, location);
     }
 
-    public static Bundle toBundle(CallComposerInfo info, int phoneId, int callId) {
+    public static Bundle toBundle(CallComposerInfo info) {
         if (info == null) {
             return null;
         }
         Bundle bundle = new Bundle();
-        bundle.putString(QtiCallConstants.EXTRA_CALL_COMPOSER_TOKEN,
-                buildCallComposerToken(phoneId, callId));
         bundle.putInt(QtiCallConstants.EXTRA_CALL_COMPOSER_PRIORITY, info.getPriority());
         String subject = info.getSubject();
         if (subject != null || !subject.isEmpty()) {
@@ -94,12 +92,5 @@ public class CallComposerInfoUtils {
                     location.getLongitude());
         }
         return bundle;
-    }
-
-    public static String buildCallComposerToken(int phoneId, int callId) {
-        if (callId == CallComposerInfo.INVALID_CALLID) {
-            return CallComposerInfo.INVALID_TOKEN;
-        }
-        return String.valueOf(phoneId) + String.valueOf(callId);
     }
 }

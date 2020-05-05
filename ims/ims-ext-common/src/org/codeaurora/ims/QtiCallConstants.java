@@ -334,7 +334,7 @@ public class QtiCallConstants {
     public static final String ACTION_CALL_COMPOSER_INFO =
             "org.codeaurora.intent.action.CALL_COMPOSER_INFO";
     // set for MT call composer call (unique ID to match each call)
-    // Type: String
+    // Type: int
     public static String EXTRA_CALL_COMPOSER_TOKEN = "call_composer_token";
 
     // set for MT call composer call (only set when the call has ended)
