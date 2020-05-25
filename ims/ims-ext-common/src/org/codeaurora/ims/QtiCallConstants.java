@@ -328,13 +328,20 @@ public class QtiCallConstants {
     public static final int CALL_COMPOSER_MODE = 1004;
 
     /**
-     * Key values for the Call Composer elements sent through the dial request
+     * Key values for the Call Composer elements
      */
-    // set for MT call composer call
-    // Type: int
+    // Intent action broadcasted when call composer elements are available for MT
+    public static final String ACTION_CALL_COMPOSER_INFO =
+            "org.codeaurora.intent.action.CALL_COMPOSER_INFO";
+    // set for MT call composer call (unique ID to match each call)
+    // Type: String
     public static String EXTRA_CALL_COMPOSER_TOKEN = "call_composer_token";
 
-    // set when a call composer call is dialed
+    // set for MT call composer call (only set when the call has ended)
+    // Type: boolean
+    public static String EXTRA_CALL_COMPOSER_CALL_ENDED = "call_composer_call_ended";
+
+    // set for call composer call
     public static String EXTRA_CALL_COMPOSER_INFO = "call_composer_info";
 
     // set when subject is added to call composer call

@@ -108,10 +108,18 @@ public class CallComposerInfo implements Parcelable {
                 return new Location[size];
             }
         };
+
+        public String toString() {
+            return ("{radius = " +
+                    mRadius + " , latitude = " + mLatitude +
+                    " , longitude = " + mLongitude + "}");
+        }
     }
 
     public static final int PRIORITY_URGENT = 0;
     public static final int PRIORITY_NORMAL = 1;
+    public static final int INVALID_CALLID = -1;
+    public static final String INVALID_TOKEN = "";
 
     private int mPriority;
     private String mSubject;
@@ -204,8 +212,8 @@ public class CallComposerInfo implements Parcelable {
     };
 
     public String toString() {
-        return ("{CallComposerInfo Line Info : " + "priority = " +
+        return ("{CallComposerInfo: " + "priority = " +
                 mPriority + " , subject = " + mSubject +
-                " , image url = " + mImageUrl + "}");
+                " , image url = " + mImageUrl + ", location = " + mLocation +"}");
     }
 }

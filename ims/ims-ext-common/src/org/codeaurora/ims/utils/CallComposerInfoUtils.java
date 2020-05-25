@@ -52,7 +52,9 @@ public class CallComposerInfoUtils {
         Uri imageUrl = extras.getParcelable(
                 QtiCallConstants.EXTRA_CALL_COMPOSER_IMAGE);
         if (extras.containsKey(QtiCallConstants.EXTRA_CALL_COMPOSER_LOCATION)) {
-            float radius = extras.getFloat(
+            // issue seen when passing float from dialer
+            // passing as double from dialer and then parsing as float here
+            float radius = (float) extras.getDouble(
                     QtiCallConstants.EXTRA_CALL_COMPOSER_LOCATION_RADIUS,
                     CallComposerInfo.Location.DEFAULT_RADIUS);
             double latitude = extras.getDouble(
@@ -63,5 +65,41 @@ public class CallComposerInfoUtils {
         }
 
         return new CallComposerInfo(priority, subject, imageUrl, location);
+    }
+
+    public static Bundle toBundle(CallComposerInfo info, int phoneId, int callId) {
+        if (info == null) {
+            return null;
+        }
+        Bundle bundle = new Bundle();
+        bundle.putString(QtiCallConstants.EXTRA_CALL_COMPOSER_TOKEN,
+                buildCallComposerToken(phoneId, callId));
+        bundle.putInt(QtiCallConstants.EXTRA_CALL_COMPOSER_PRIORITY, info.getPriority());
+        String subject = info.getSubject();
+        if (subject != null || !subject.isEmpty()) {
+            bundle.putString(QtiCallConstants.EXTRA_CALL_COMPOSER_SUBJECT, subject);
+        }
+        Uri imageUrl = info.getImageUrl();
+        if (imageUrl != null) {
+            bundle.putParcelable(QtiCallConstants.EXTRA_CALL_COMPOSER_IMAGE, imageUrl);
+        }
+        CallComposerInfo.Location location = info.getLocation();
+        if (location != null) {
+            bundle.putBoolean(QtiCallConstants.EXTRA_CALL_COMPOSER_LOCATION, true);
+            bundle.putFloat(QtiCallConstants.EXTRA_CALL_COMPOSER_LOCATION_RADIUS,
+                    location.getRadius());
+            bundle.putDouble(QtiCallConstants.EXTRA_CALL_COMPOSER_LOCATION_LATITUDE,
+                    location.getLatitude());
+            bundle.putDouble(QtiCallConstants.EXTRA_CALL_COMPOSER_LOCATION_LONGITUDE,
+                    location.getLongitude());
+        }
+        return bundle;
+    }
+
+    public static String buildCallComposerToken(int phoneId, int callId) {
+        if (callId == CallComposerInfo.INVALID_CALLID) {
+            return CallComposerInfo.INVALID_TOKEN;
+        }
+        return String.valueOf(phoneId) + String.valueOf(callId);
     }
 }

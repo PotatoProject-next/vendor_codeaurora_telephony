@@ -342,6 +342,21 @@ public class QtiImsExtManager {
         }
     }
 
+    /**
+     * Used by clients to check if IMS service CALLCOMPOSER is enabled/disabled
+     * @param phoneId indicates the phone instance which triggered the request
+     * @return boolean
+     */
+    public boolean isCallComposerEnabled(int phoneId)
+            throws QtiImsException {
+        validateInvariants(phoneId);
+        try {
+            return mQtiImsExt.isCallComposerEnabled(phoneId);
+        } catch (RemoteException e) {
+            throw new QtiImsException("Remote ImsService isCallComposerEnabled: " + e);
+        }
+    }
+
     /*package private*/
     void validateInvariants(int phoneId)  throws QtiImsException {
         checkBinder();
